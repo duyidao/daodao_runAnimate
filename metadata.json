@@ -1,0 +1,5 @@
+{
+  "name": "Circular Reference Visualizer",
+  "description": "An interactive visualization demonstrating the circular reference detection algorithm, specifically highlighting the 'peer reference' bug and its solution using Sets.",
+  "requestFramePermissions": []
+}
