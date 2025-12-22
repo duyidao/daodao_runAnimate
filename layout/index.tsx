@@ -1,7 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ObjectLoop from "@/views/objectLoop/index";
-import { DEMO_CODE, DEMO_STEPS } from "@/views/objectLoop/constants";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -11,10 +8,11 @@ import {
   Box,
 } from "lucide-react";
 
-const CodeViewer: React.FC<{ code: string; activeLine: number }> = ({
-  code,
-  activeLine,
-}) => {
+const CodeViewer: React.FC<{
+  code: string;
+  activeLine: number;
+  codeType?: string;
+}> = ({ code, activeLine, codeType = "javascript" }) => {
   const lines = code.split("\n");
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -32,8 +30,13 @@ const CodeViewer: React.FC<{ code: string; activeLine: number }> = ({
   return (
     <div className="bg-[#1e1e1e] h-full flex flex-col font-mono text-sm overflow-hidden">
       <div className="flex h-16 items-center px-4 py-3 bg-[#252526] border-b border-[#333]">
+        <div className="flex gap-1.5 mr-5">
+          <div className="w-3 h-3 rounded-full bg-red-500"></div>
+          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
         <span className="text-yellow-500 font-bold text-xs uppercase tracking-wider">
-          JavaScript 执行
+          {codeType} 代码执行
         </span>
       </div>
       <div ref={scrollRef} className="flex-1 overflow-auto p-4 leading-6">
@@ -84,20 +87,19 @@ export default function AppLayout({
 
   const steps = animateStep;
   const currentStep = steps[currentStepIndex];
+  const totalSteps = steps.length;
+  const playTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // 使用 cloneElement 向 children 传递额外 props
   const clonedChildren = React.cloneElement(children as React.ReactElement, {
-    currentStepIndex,
     currentStep,
   });
 
-  // Auto-play Logic
   useEffect(() => {
-    let timer: number;
     if (isPlaying) {
-      timer = window.setInterval(() => {
+      playTimer.current = setInterval(() => {
         setCurrentStepIndex((prev) => {
-          if (prev >= steps.length - 1) {
+          if (prev >= totalSteps - 1) {
             setIsPlaying(false);
             return prev;
           }
@@ -105,16 +107,33 @@ export default function AppLayout({
         });
       }, playbackSpeed);
     }
-    return () => clearInterval(timer);
-  }, [isPlaying, steps.length, playbackSpeed]);
 
-  const handleNext = () => {
-    if (currentStepIndex < steps.length - 1)
-      setCurrentStepIndex((prev) => prev + 1);
-  };
+    return () => {
+      if (playTimer.current) {
+        clearInterval(playTimer.current);
+      }
+    };
+  }, [isPlaying, playbackSpeed]);
+
+  const handlePlayPause = useCallback(() => {
+    setIsPlaying((prev) => {
+      // 如果在最后一步且用户点击播放，则重置到开始
+      if (!prev && currentStepIndex === totalSteps - 1) {
+        setCurrentStepIndex(0);
+        return true;
+      }
+      return !prev;
+    });
+  }, [currentStepIndex, totalSteps]);
 
   const handlePrev = () => {
-    if (currentStepIndex > 0) setCurrentStepIndex((prev) => prev - 1);
+    setIsPlaying(false);
+    setCurrentStepIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setIsPlaying(false);
+    setCurrentStepIndex((prev) => Math.min(prev + 1, totalSteps - 1));
   };
 
   const handleReset = () => {
@@ -142,7 +161,7 @@ export default function AppLayout({
           </div>
         </div>
 
-        {clonedChildren}
+        <div className="flex-1 overflow-auto">{clonedChildren}</div>
 
         {/* Control Bar */}
         <div className="h-20 border-t border-[#333] bg-[#1a1a1a] flex items-center justify-center gap-4 px-6 shrink-0">
@@ -164,7 +183,7 @@ export default function AppLayout({
           </button>
 
           <button
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={() => handlePlayPause(!isPlaying)}
             className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all transform active:scale-95 ${
               isPlaying
                 ? "bg-yellow-500 hover:bg-yellow-400 text-black"

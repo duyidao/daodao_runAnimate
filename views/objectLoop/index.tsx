@@ -18,11 +18,15 @@ const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
           <Database className="w-3.5 h-3.5" />
           当前值 (Set)
         </div>
-        {isNewScope && (
-          <span className="flex items-center gap-1 text-[10px] font-bold text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full animate-pulse">
+        {
+          <span
+            className={`flex items-center gap-1 text-[10px] font-bold text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full  ${
+              isNewScope ? "opacity-100 animate-pulse" : "opacity-0"
+            }`}
+          >
             <Layers className="w-3 h-3" /> NEW SET COPY
           </span>
-        )}
+        }
       </div>
 
       <div className="flex flex-wrap gap-2 min-h-[36px] items-center">
@@ -103,20 +107,32 @@ const GraphVisualizer: React.FC<{
         {/* Branches Container */}
         <div className="flex gap-16 relative">
           {/* Connection Lines (drawn via CSS borders for simplicity or SVG) */}
-          <svg className="absolute -top-12 left-0 w-full h-12 pointer-events-none overflow-visible">
-            {/* Line to A */}
+          <svg
+            className="absolute -top-12 left-0 w-full h-12 pointer-events-none overflow-visible"
+            viewBox="0 0 100 50"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            {/* Line to A (left) */}
             <path
-              d="M 50% 0 C 50% 20, 20% 20, 20% 48"
+              d="M 50 0 C 60 28, 10 25, 0 50"
               fill="none"
               stroke={isA ? "#a855f7" : "#4b5563"}
-              strokeWidth="2"
+              strokeWidth="0.8"
+              strokeOpacity={isA ? 1 : 0.6}
+              className={`transition-all duration-300 ${
+                isA ? "stroke-purple-500" : ""
+              }`}
             />
-            {/* Line to C */}
+            {/* Line to C (right) */}
             <path
-              d="M 50% 0 C 50% 20, 80% 20, 80% 48"
+              d="M 50 0 C 60 38, 90 20, 108 50"
               fill="none"
               stroke={isC ? "#a855f7" : "#4b5563"}
-              strokeWidth="2"
+              strokeWidth="0.8"
+              strokeOpacity={isC ? 1 : 0.6}
+              className={`transition-all duration-300 ${
+                isC ? "stroke-purple-500" : ""
+              }`}
             />
           </svg>
 
@@ -183,9 +199,18 @@ const GraphVisualizer: React.FC<{
   );
 };
 
-export default function ObjectLoop({ currentStep }) {
+export default function ObjectLoop({
+  currentStep,
+}: {
+  currentStep?: {
+    description: string;
+    seen: Set<string>;
+    isNewScope: boolean;
+    activeNode: string;
+  };
+}) {
   return (
-    <div className="flex-1 p-6 flex flex-col gap-6 overflow-hidden">
+    <div className="flex-1 p-6 flex flex-col h-full gap-6 overflow-hidden">
       {/* 1. Step Description */}
       <div className="bg-gradient-to-r from-blue-900/20 to-transparent p-4 rounded-l border-l-4 border-blue-500">
         <h2 className="text-xs font-bold text-blue-400 uppercase mb-1">

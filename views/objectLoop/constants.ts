@@ -1,4 +1,4 @@
-export const DEMO_CODE = `function hasCircleRef(obj, seen = new Set()) {
+export const ObjectLoopCode = `function hasCircleRef(obj, seen = new Set()) {
   if (!(typeof obj === 'object' && obj !== null)) {
     return false
   }
@@ -37,7 +37,7 @@ export type Step = {
   isNewScope: boolean;
 };
 
-export const DEMO_STEPS: Step[] = [
+export const ObjectLoopSteps: Step[] = [
   // --- Init ---
   {
     line: 1,
