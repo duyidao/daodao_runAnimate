@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   Box,
 } from "lucide-react";
+import NavigationOverlay from "../components/NavigationOverlay";
 
 const CodeViewer: React.FC<{
   code: string;
@@ -141,19 +142,37 @@ export default function AppLayout({
     setCurrentStepIndex(0);
   };
 
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const handleSelectScenario = () => {
+    setCurrentStepIndex(0);
+  };
+
   return (
-    <div className="h-screen bg-[#101010] text-gray-100 flex overflow-hidden font-sans selection:bg-blue-500/30">
+    <div className="h-screen bg-[#101010] text-gray-100 flex overflow-hidden font-sans selection:bg-orange-500/30">
+      <NavigationOverlay
+        isOpen={isNavOpen}
+        onClose={() => setIsNavOpen(false)}
+        onSelect={handleSelectScenario}
+      />
+
       {/* LEFT PANEL: CODE */}
       <div className="w-1/2 flex flex-col border-r border-[#333]">
         <CodeViewer code={animateCode} activeLine={currentStep.line} />
       </div>
 
       {/* RIGHT PANEL: EXECUTION */}
-      <div className="w-1/2 flex flex-col bg-[#141414]">
+      <div
+        className="w-1/2 flex flex-col"
+        style={{ backgroundColor: "rgba(39, 26, 17, 0.3)" }}
+      >
         {/* Header Area */}
         <div className="h-16 px-6 border-b border-[#333] flex items-center justify-between">
-          <h1 className="text-sm font-bold text-gray-200 flex items-center gap-2">
-            <Box className="w-4 h-4 text-blue-500" />
+          <h1
+            className="text-sm font-bold text-gray-200 flex items-center gap-2 bg-stone-800/80 hover:bg-orange-900/30 px-5 py-2 rounded-xl border border-stone-700 transition-all active:scale-95 group shadow-xl shadow-black/40 cursor-pointer"
+            onClick={() => setIsNavOpen(true)}
+          >
+            <Box className="w-4 h-4 text-orange-500" />
             执行流程
           </h1>
           <div className="text-xs font-mono text-gray-500">
@@ -187,7 +206,7 @@ export default function AppLayout({
             className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all transform active:scale-95 ${
               isPlaying
                 ? "bg-yellow-500 hover:bg-yellow-400 text-black"
-                : "bg-blue-600 hover:bg-blue-500 text-white"
+                : "bg-orange-600 hover:bg-orange-500 text-white"
             }`}
           >
             {isPlaying ? (

@@ -41,7 +41,7 @@ const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
               >
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    item === "root" ? "bg-blue-400" : "bg-purple-400"
+                    item === "root" ? "bg-orange-400" : "bg-purple-400"
                   }`}
                 ></div>
                 {item === "root" ? "obj" : `obj.${item}`}
@@ -69,7 +69,7 @@ const GraphVisualizer: React.FC<{
   const inSetC = seen.includes("c");
 
   return (
-    <div className="flex-1 bg-gray-900/50 border border-gray-700 rounded-xl relative overflow-hidden flex flex-col items-center justify-center py-8">
+    <div className="flex-1 bg-gray-800/40 border border-gray-700 rounded-xl relative overflow-hidden flex flex-col items-center justify-center py-8">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
       <div className="relative z-10 flex flex-col items-center gap-12 scale-110">
@@ -83,16 +83,16 @@ const GraphVisualizer: React.FC<{
             className={`w-14 h-14 rounded-full border-2 flex items-center justify-center bg-gray-800 transition-all duration-300 z-10 
                         ${
                           isRoot
-                            ? "border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                            ? "border-orange-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]"
                             : inSetRoot
-                            ? "border-blue-900/50 opacity-50"
+                            ? "border-orange-900/50 opacity-50"
                             : "border-gray-600"
                         }
                     `}
           >
             <Box
               className={`w-6 h-6 ${
-                isRoot ? "text-blue-400" : "text-gray-500"
+                isRoot ? "text-orange-400" : "text-gray-500"
               }`}
             />
           </div>
@@ -212,8 +212,8 @@ export default function ObjectLoop({
   return (
     <div className="flex-1 p-6 flex flex-col h-full gap-6 overflow-hidden">
       {/* 1. Step Description */}
-      <div className="bg-gradient-to-r from-blue-900/20 to-transparent p-4 rounded-l border-l-4 border-blue-500">
-        <h2 className="text-xs font-bold text-blue-400 uppercase mb-1">
+      <div className="bg-gradient-to-r from-orange-900/20 to-transparent p-4 rounded-l border-l-4 border-orange-500">
+        <h2 className="text-xs font-bold text-orange-400 uppercase mb-1">
           当前操作
         </h2>
         <p className="text-lg font-medium text-gray-100">
