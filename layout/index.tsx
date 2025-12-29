@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Play,
   Pause,
@@ -8,6 +9,7 @@ import {
   Box,
 } from "lucide-react";
 import NavigationOverlay from "../components/NavigationOverlay";
+import { CATEGORIES } from "@/constants";
 
 const CodeViewer: React.FC<{
   code: string;
@@ -75,20 +77,45 @@ const CodeViewer: React.FC<{
 
 export default function AppLayout({
   children,
-  animateCode,
-  animateStep,
 }: {
   children: React.ReactNode;
   animateCode: string;
   animateStep: any;
 }) {
+  const location = useLocation();
+  const [route, setRoute] = useState({})
+  const [steps, setSteps] = useState([])
+  useEffect(() => {
+    for (let i = 0; i < CATEGORIES.length; i++) {
+      const cat = CATEGORIES[i];
+      for (let j = 0; j < cat.scenarios.length; j++) {
+        const scenario = cat.scenarios[j];
+        if (scenario.path === location.pathname) {
+          setRoute(scenario)
+          setSteps(scenario.step)
+          break
+        }
+      }
+    }
+  }, [location.pathname])
+
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1000);
-
-  const steps = animateStep;
-  const currentStep = steps[currentStepIndex];
-  const totalSteps = steps.length;
+  const [currentStep, setCurrentStep] = useState({})
+  const [totalSteps, setTotalSteps] = useState(0)
+  useEffect(() => {
+    if (!steps.length) return
+    setTotalSteps(steps?.length)
+  }, [steps])
+  useEffect(() => {
+    if (!steps.length) return
+    setCurrentStep(steps[currentStepIndex])
+    setTimeout(() => {
+      console.log(currentStep);
+      
+    }, 1000)
+  }, [steps, currentStepIndex])
   const playTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // 使用 cloneElement 向 children 传递额外 props
@@ -158,7 +185,7 @@ export default function AppLayout({
 
       {/* LEFT PANEL: CODE */}
       <div className="w-1/2 flex flex-col border-r border-[#333]">
-        <CodeViewer code={animateCode} activeLine={currentStep.line} />
+        <CodeViewer code={route.code || ''} activeLine={currentStep.line} />
       </div>
 
       {/* RIGHT PANEL: EXECUTION */}
@@ -176,7 +203,7 @@ export default function AppLayout({
             执行流程
           </h1>
           <div className="text-xs font-mono text-gray-500">
-            步骤 {currentStepIndex + 1} / {steps.length}
+            步骤 {currentStepIndex + 1} / {steps?.length}
           </div>
         </div>
 
@@ -218,7 +245,7 @@ export default function AppLayout({
 
           <button
             onClick={handleNext}
-            disabled={currentStepIndex === steps.length - 1}
+            disabled={currentStepIndex === steps?.length - 1}
             className="p-2.5 rounded-full text-gray-400 hover:bg-gray-800 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
             title="下一步"
           >

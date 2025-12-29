@@ -2,7 +2,7 @@ import React from "react";
 import { Database, Box, Layers } from "lucide-react";
 
 const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
-  seen,
+  seen = [],
   isNewScope,
 }) => {
   return (
@@ -57,7 +57,7 @@ const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
 const GraphVisualizer: React.FC<{
   activeNode: string | null;
   seen: string[];
-}> = ({ activeNode, seen }) => {
+}> = ({ activeNode, seen = [] }) => {
   // Nodes: root, a, c
   const isRoot = activeNode === "root";
   const isA = activeNode === "a";
@@ -209,6 +209,8 @@ export default function ObjectLoop({
     activeNode: string;
   };
 }) {
+  console.log('---', currentStep);
+  
   return (
     <div className="flex-1 p-6 flex flex-col h-full gap-6 overflow-hidden">
       {/* 1. Step Description */}
@@ -217,15 +219,15 @@ export default function ObjectLoop({
           当前操作
         </h2>
         <p className="text-lg font-medium text-gray-100">
-          {currentStep.description}
+          {currentStep?.description}
         </p>
       </div>
 
       {/* 2. Visualizers Grid */}
       <div className="grid grid-cols-1 gap-4 shrink-0">
         <SetVisualizer
-          seen={currentStep.seen}
-          isNewScope={currentStep.isNewScope}
+          seen={currentStep?.seen}
+          isNewScope={currentStep?.isNewScope}
         />
       </div>
 
@@ -235,8 +237,8 @@ export default function ObjectLoop({
           <Layers className="w-3.5 h-3.5" /> 对象图表
         </div>
         <GraphVisualizer
-          activeNode={currentStep.activeNode}
-          seen={currentStep.seen}
+          activeNode={currentStep?.activeNode}
+          seen={currentStep?.seen}
         />
       </div>
     </div>

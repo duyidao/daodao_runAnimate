@@ -1,40 +1,38 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ObjectLoop from "@/views/objectLoop/index";
 import EffectRefLink from "@/views/effectRefLink/index";
 import AppLayout from "@/layout/index";
-import { ObjectLoopCode, ObjectLoopSteps } from "./views/objectLoop/constants";
-import {
-  EffectRefLinkCode,
-  EffectRefLinkSteps,
-} from "./views/effectRefLink/constants";
 
 export default function App() {
   return (
     <Router>
+    <AppLayout>
       <Routes>
         <Route
           path="/objectLoop"
           element={
-            <AppLayout
-              animateCode={ObjectLoopCode}
-              animateStep={ObjectLoopSteps}
-            >
+            // <AppLayout
+            //   animateCode={ObjectLoopCode}
+            //   animateStep={ObjectLoopSteps}
+            // >
               <ObjectLoop />
-            </AppLayout>
+            // </AppLayout>
           }
         />
         <Route
           path="/effectRefLink"
           element={
-            <AppLayout
-              animateCode={EffectRefLinkCode}
-              animateStep={EffectRefLinkSteps}
-            >
+            // <AppLayout
+            //   animateCode={EffectRefLinkCode}
+            //   animateStep={EffectRefLinkSteps}
+            // >
               <EffectRefLink />
-            </AppLayout>
+            // </AppLayout>
           }
         />
       </Routes>
+            </AppLayout>
     </Router>
   );
 }
