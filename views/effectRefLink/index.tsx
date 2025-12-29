@@ -1,35 +1,32 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React from "react";
 import Visualizer from "./components/Visualizer";
+import { useOutletContext } from "react-router-dom";
+import { Workflow } from "lucide-react";
 
-export default function App({
-  currentStep,
-}: {
-  currentStep?: {
-    description: string;
-    state: any;
-  };
-}) {
+export default function EffectRefLink() {
+  const { currentStep } = useOutletContext<{
+    currentStep: any;
+  }>();
+
   return (
-    <div className="flex flex-col h-full bg-[#090b0e]">
+    <div className="flex flex-col h-full px-8 py-4">
       {/* Dynamic Operation Banner */}
-      <div className="px-8 py-6 bg-[#0d0f12]/50 border-b border-[#1f2228]">
-        <div className="relative border-l-4 border-blue-600 bg-[#12141a]/80 backdrop-blur-md p-5 rounded-r-lg border border-white/5 shadow-2xl">
-          <div className="text-[10px] text-blue-500 font-black uppercase tracking-[0.2em] mb-1.5">
-            当前操作
-          </div>
-          <p className="text-xl font-bold text-gray-100 tracking-tight leading-snug">
-            {currentStep.description}
-          </p>
-        </div>
+      <div className="bg-gradient-to-r from-orange-900/20 to-transparent p-4 rounded-l border-l-4 border-orange-500 mb-4">
+        <h2 className="text-xs font-bold text-orange-400 uppercase mb-1">
+          当前操作
+        </h2>
+        <p className="text-lg font-medium text-gray-100">
+          {currentStep.description}
+        </p>
       </div>
 
       {/* Visualization Content Area */}
-      <div className="flex-1 px-8 pb-4 flex flex-col min-h-0 bg-[#090b0e]">
+      <div className="flex-1 flex flex-col min-h-0">
         <div className="flex items-center gap-2 my-3 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+          <Workflow className="w-3.5 h-3.5" />
           内存对象图表
         </div>
-        <Visualizer state={currentStep.state} />
+        {currentStep.state && <Visualizer state={currentStep.state} />}
       </div>
     </div>
   );

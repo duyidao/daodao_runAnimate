@@ -1,5 +1,10 @@
 import React from "react";
-import { SimulationState, RefNode, EffectNode, Link } from "../types";
+import {
+  SimulationState,
+  RefNode,
+  EffectNode,
+  Link,
+} from "../../../types/types";
 
 interface VisualizerProps {
   state: SimulationState;
@@ -20,7 +25,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
   const REF_Y = 60;
 
   return (
-    <div className="relative flex-1 flex flex-col gap-6 bg-[#0d0f12] rounded-xl border border-[#1f2228] overflow-hidden p-6">
+    <div className="relative flex-1 flex flex-col gap-6 bg-[#0d0f1233] rounded-xl border border-[#1f2228] overflow-hidden p-6">
       {/* Background Grid */}
       <div
         className="absolute inset-0 opacity-5 pointer-events-none"
@@ -212,7 +217,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                       x={linkX - 45}
                       y={(LINK_Y + REF_Y) / 2}
                       textAnchor="end"
-                      className="fill-blue-300 font-mono text-[10px] font-medium"
+                      className="fill-orange-300 font-mono text-[10px] font-medium"
                     >
                       dep
                     </text>
@@ -233,7 +238,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                       x={refX + 8}
                       y={(LINK_Y + REF_Y) / 2 - 10}
                       textAnchor="start"
-                      className="fill-blue-300 font-mono text-[10px] font-medium"
+                      className="fill-orange-300 font-mono text-[10px] font-medium"
                     >
                       subs
                     </text>
@@ -257,7 +262,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                       x={refX + 42}
                       y={(LINK_Y + REF_Y) / 2 + 15}
                       textAnchor="start"
-                      className="fill-blue-300 font-mono text-[10px] font-medium opacity-80"
+                      className="fill-orange-300 font-mono text-[10px] font-medium opacity-80"
                     >
                       subsTail
                     </text>
@@ -289,8 +294,8 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               <text
                 textAnchor="middle"
                 dy="5"
-                className={`font-mono text-sm font-bold uppercase tracking-wider ${
-                  eff.active ? "fill-blue-100" : "fill-indigo-300"
+                className={`font-mono text-2xl font-bold uppercase tracking-wider ${
+                  eff.active ? "fill-orange-100" : "fill-indigo-300"
                 }`}
               >
                 {eff.name}
@@ -307,14 +312,14 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 width="170"
                 height="60"
                 rx="30"
-                fill="#1e293b"
-                stroke="#3b82f6"
+                fill="#3b2d1eff"
+                stroke="#f6953bff"
                 strokeWidth="2.5"
               />
               <text
                 textAnchor="middle"
                 dy="5"
-                className="fill-blue-200 font-mono text-xs font-bold tracking-wide uppercase"
+                className="fill-orange-200 font-mono text-2xl font-bold tracking-wide uppercase"
               >
                 {ref.name}
               </text>
@@ -330,14 +335,14 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 width="170"
                 height="90"
                 rx="10"
-                fill="#1e293b"
-                stroke="#3b82f6"
+                fill="#3b2d1eff"
+                stroke="#f6953bff"
                 strokeWidth="1.5"
               />
               <text
                 textAnchor="middle"
                 dy="5"
-                className="fill-blue-100 font-mono text-xs font-bold tracking-widest"
+                className="fill-orange-100 font-mono text-2xl font-bold tracking-widest"
               >
                 {link.id}
               </text>
@@ -410,7 +415,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               key={link.id}
               className="p-4 rounded-lg border border-[#2d333b] bg-[#161a22] shadow-sm"
             >
-              <div className="text-xs font-bold text-blue-400 font-mono mb-3 uppercase">
+              <div className="text-xs font-bold text-orange-400 font-mono mb-3 uppercase">
                 {link.id} (Bridge)
               </div>
               <div className="space-y-2 text-[11px] font-mono">
@@ -422,7 +427,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 </div>
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
                   <span className="text-gray-500">dep (Ref):</span>
-                  <span className="text-blue-300">
+                  <span className="text-orange-300">
                     {refs[link.depId]?.name}
                   </span>
                 </div>
@@ -456,26 +461,26 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
           {refList.map((ref) => (
             <div
               key={ref.id}
-              className="p-4 rounded-lg border border-blue-900/40 bg-[#161a22] shadow-sm"
+              className="p-4 rounded-lg border border-orange-900/40 bg-[#161a22] shadow-sm"
             >
               <div className="flex justify-between items-center mb-3">
-                <span className="text-xs font-bold text-blue-400 font-mono uppercase">
+                <span className="text-xs font-bold text-orange-400 font-mono uppercase">
                   {ref.name}
                 </span>
-                <span className="text-[10px] text-blue-100 px-2 py-0.5 bg-blue-900/40 rounded font-mono">
+                <span className="text-[10px] text-orange-100 px-2 py-0.5 bg-orange-900/40 rounded font-mono">
                   val: {JSON.stringify(ref.value)}
                 </span>
               </div>
               <div className="space-y-2 text-[11px] font-mono">
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
                   <span className="text-gray-500">subsHead:</span>
-                  <span className="text-blue-300">
+                  <span className="text-orange-300">
                     {ref.subsHeadId || "null"}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">subsTail:</span>
-                  <span className="text-blue-300">
+                  <span className="text-orange-300">
                     {ref.subsTailId || "null"}
                   </span>
                 </div>

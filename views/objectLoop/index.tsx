@@ -1,5 +1,7 @@
 import React from "react";
 import { Database, Box, Layers } from "lucide-react";
+import { useOutletContext } from "react-router-dom";
+import type { Step } from "./constants";
 
 const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
   seen = [],
@@ -24,7 +26,7 @@ const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
               isNewScope ? "opacity-100 animate-pulse" : "opacity-0"
             }`}
           >
-            <Layers className="w-3 h-3" /> NEW SET COPY
+            <Layers className="w-3 h-3" /> Set 新值
           </span>
         }
       </div>
@@ -199,18 +201,11 @@ const GraphVisualizer: React.FC<{
   );
 };
 
-export default function ObjectLoop({
-  currentStep,
-}: {
-  currentStep?: {
-    description: string;
-    seen: Set<string>;
-    isNewScope: boolean;
-    activeNode: string;
-  };
-}) {
-  console.log('---', currentStep);
-  
+export default function ObjectLoop() {
+  const { currentStep } = useOutletContext<{
+    currentStep: Step;
+  }>();
+
   return (
     <div className="flex-1 p-6 flex flex-col h-full gap-6 overflow-hidden">
       {/* 1. Step Description */}
@@ -219,15 +214,15 @@ export default function ObjectLoop({
           当前操作
         </h2>
         <p className="text-lg font-medium text-gray-100">
-          {currentStep?.description}
+          {currentStep.description}
         </p>
       </div>
 
       {/* 2. Visualizers Grid */}
       <div className="grid grid-cols-1 gap-4 shrink-0">
         <SetVisualizer
-          seen={currentStep?.seen}
-          isNewScope={currentStep?.isNewScope}
+          seen={currentStep.seen}
+          isNewScope={currentStep.isNewScope}
         />
       </div>
 
@@ -237,8 +232,8 @@ export default function ObjectLoop({
           <Layers className="w-3.5 h-3.5" /> 对象图表
         </div>
         <GraphVisualizer
-          activeNode={currentStep?.activeNode}
-          seen={currentStep?.seen}
+          activeNode={currentStep.activeNode}
+          seen={currentStep.seen}
         />
       </div>
     </div>

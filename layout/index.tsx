@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import NavigationOverlay from "../components/NavigationOverlay";
 import { CATEGORIES } from "@/constants";
+import { Outlet } from "react-router-dom";
 
 const CodeViewer: React.FC<{
   code: string;
@@ -78,50 +79,36 @@ const CodeViewer: React.FC<{
 export default function AppLayout({
   children,
 }: {
-  children: React.ReactNode;
-  animateCode: string;
-  animateStep: any;
+  children?: React.ReactNode;
 }) {
   const location = useLocation();
-  const [route, setRoute] = useState({})
-  const [steps, setSteps] = useState([])
+  const [route, setRoute] = useState({});
+  const [steps, setSteps] = useState([]);
   useEffect(() => {
     for (let i = 0; i < CATEGORIES.length; i++) {
       const cat = CATEGORIES[i];
       for (let j = 0; j < cat.scenarios.length; j++) {
         const scenario = cat.scenarios[j];
         if (scenario.path === location.pathname) {
-          setRoute(scenario)
-          setSteps(scenario.step)
-          break
+          setRoute(scenario);
+          setSteps(scenario.steps);
+          break;
         }
       }
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1000);
-  const [currentStep, setCurrentStep] = useState({})
-  const [totalSteps, setTotalSteps] = useState(0)
+  const [currentStep, setCurrentStep] = useState({});
+  const [totalSteps, setTotalSteps] = useState(0);
   useEffect(() => {
-    if (!steps.length) return
-    setTotalSteps(steps?.length)
-  }, [steps])
-  useEffect(() => {
-    if (!steps.length) return
-    setCurrentStep(steps[currentStepIndex])
-    setTimeout(() => {
-      console.log(currentStep);
-      
-    }, 1000)
-  }, [steps, currentStepIndex])
+    if (!steps.length) return;
+    setCurrentStep(steps[currentStepIndex]);
+    setTotalSteps(steps.length);
+  }, [steps, currentStepIndex]);
   const playTimer = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // 使用 cloneElement 向 children 传递额外 props
-  const clonedChildren = React.cloneElement(children as React.ReactElement, {
-    currentStep,
-  });
 
   useEffect(() => {
     if (isPlaying) {
@@ -185,7 +172,7 @@ export default function AppLayout({
 
       {/* LEFT PANEL: CODE */}
       <div className="w-1/2 flex flex-col border-r border-[#333]">
-        <CodeViewer code={route.code || ''} activeLine={currentStep.line} />
+        <CodeViewer code={route.code || ""} activeLine={currentStep.line} />
       </div>
 
       {/* RIGHT PANEL: EXECUTION */}
@@ -207,7 +194,13 @@ export default function AppLayout({
           </div>
         </div>
 
-        <div className="flex-1 overflow-auto">{clonedChildren}</div>
+        <div className="flex-1 overflow-auto">
+          <Outlet
+            context={{
+              currentStep,
+            }}
+          />
+        </div>
 
         {/* Control Bar */}
         <div className="h-20 border-t border-[#333] bg-[#1a1a1a] flex items-center justify-center gap-4 px-6 shrink-0">

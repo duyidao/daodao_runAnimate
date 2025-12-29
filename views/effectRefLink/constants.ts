@@ -1,4 +1,4 @@
-import { SimulationState, AnimationStep } from "./types";
+import { SimulationState, AnimationStep } from "../../types/types";
 
 export const EffectRefLinkCode = `const flag = ref(true);
 const count = ref(0);
