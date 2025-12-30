@@ -1,4 +1,4 @@
-import { SimulationState, AnimationStep } from "../../types/types";
+import { SimulationState, AnimationStep } from "@/types/effectRefLink";
 
 export const EffectRefLinkCode = `const flag = ref(true);
 const count = ref(0);
@@ -25,7 +25,7 @@ const INITIAL_STATE: SimulationState = {
 
 export const EffectRefLinkSteps: AnimationStep[] = [
   {
-    line: 1,
+    highlightLines: 1,
     description: "执行 ref(true): 创建 flag 响应式变量",
     operationType: "REF_INIT",
     state: {
@@ -35,7 +35,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 2,
+    highlightLines: 2,
     description: "执行 ref(0): 创建 count 响应式变量",
     operationType: "REF_INIT",
     state: {
@@ -48,7 +48,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 4,
+    highlightLines: 4,
     description: "创建 ReactiveEffect 对象，准备执行副作用函数",
     operationType: "EFFECT_INIT",
     state: {
@@ -62,7 +62,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 4,
+    highlightLines: 4,
     description:
       "Effect.run(): 进入副作用作用域。关键动作: this.depsTail = undefined",
     operationType: "EFFECT_RUN",
@@ -85,7 +85,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 5,
+    highlightLines: 5,
     description: "访问 flag.value: 触发 track(flag)。创建并链接 link1",
     operationType: "LINK_CREATE",
     state: {
@@ -115,7 +115,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 6,
+    highlightLines: 6,
     description:
       "访问 count.value: 触发 track(count)。创建 link2 并建立链表关系",
     operationType: "LINK_CREATE",
@@ -165,7 +165,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 7,
+    highlightLines: 7,
     description:
       "Run 结束。节点已正确连接在 Effect 的 deps 链和 Ref 的 subs 链上",
     operationType: "FINISH",
@@ -214,7 +214,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 11,
+    highlightLines: 11,
     description: "用户操作: flag 变更。Effect 被标记为 dirty，准备 Re-run",
     operationType: "TRIGGER",
     state: {
@@ -261,7 +261,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 4,
+    highlightLines: 4,
     description: "Re-run 开始。再次重置: depsTail = undefined",
     operationType: "EFFECT_RUN",
     state: {
@@ -310,7 +310,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 5,
+    highlightLines: 5,
     description:
       "再次 track(flag): 发现 link1 的 dep 已匹配。复用 link1，设置 depsTail = link1",
     operationType: "REUSED",
@@ -360,7 +360,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 6,
+    highlightLines: 6,
     description:
       "再次 track(count): 发现下一个节点 link2 的 dep 匹配。复用 link2，设置 depsTail = link2",
     operationType: "REUSED",
@@ -410,7 +410,7 @@ export const EffectRefLinkSteps: AnimationStep[] = [
     },
   },
   {
-    line: 7,
+    highlightLines: 7,
     description: "Re-run 结束。链表完全复用，零内存分配，性能最优",
     operationType: "FINISH",
     state: {

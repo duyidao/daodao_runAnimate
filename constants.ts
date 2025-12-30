@@ -1,5 +1,6 @@
 import { Category } from "@/types/navigationOverlay";
 import { ObjectLoopCode, ObjectLoopSteps } from "./views/objectLoop/constants";
+import { PromiseCancelCode, PromiseStatusSteps } from "./views/promiseCancel/constants";
 import {
   EffectRefLinkCode,
   EffectRefLinkSteps,
@@ -18,8 +19,8 @@ export const CATEGORIES: Category[] = [
         description:
           "Tab 频繁切换时，容易造成新接口比旧接口早响应，导致页面数据是旧数据。灵活运用竞态取消思想，高效优雅解决该问题。",
         tag: ["Promise", "频繁切换", "请求取消"],
-        code: ObjectLoopCode,
-        steps: ObjectLoopSteps,
+        code: PromiseCancelCode,
+        steps: PromiseStatusSteps,
       },
       {
         id: "object-loop",

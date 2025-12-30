@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { CATEGORIES } from "@/constants";
-import { Scenario } from "../../types/navigationOverlay";
+import { Scenario } from "@/types/navigationOverlay";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   ChevronRight,
   X,
   Terminal,
 } from "lucide-react";
-import SimpleIcon from '../SimpleIcon/index'
+import SimpleIcon from '@/components/SimpleIcon/index'
 
 interface NavigationOverlayProps {
   isOpen: boolean;
@@ -152,8 +152,8 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
                   <p
                     className={`text-[11px] leading-relaxed font-medium line-clamp-3 mb-1 ${
                       location.pathname === sc.path
-                        ? "text-orange-100/70"
-                        : "text-stone-500"
+                        ? "text-orange-100/90"
+                        : "text-[#bbb]"
                     }`}
                   >
                     {sc.description || '暂无简介'}
@@ -164,10 +164,10 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
                     (sc.tag || []).map(tag => {
                       return (
                     <span
-                      className={`px-2 py-0.5 rounded text-[8px] font-black tracking-widest uppercase ${
+                      className={`px-2 py-0.5 rounded text-[9px] font-black tracking-widest uppercase ${
                         location.pathname === sc.path
                           ? "bg-black/20 text-white"
-                          : "bg-stone-800 text-stone-600"
+                          : "bg-stone-800 text-[#aaa]"
                       }`}
                       key={tag}
                     >

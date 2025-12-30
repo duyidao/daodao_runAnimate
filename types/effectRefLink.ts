@@ -1,3 +1,4 @@
+import { Step } from './step'
 
 export enum NodeType {
   REF = 'REF',
@@ -41,9 +42,7 @@ export interface SimulationState {
   operationType: string;
 }
 
-export interface AnimationStep {
-  line: number;
-  description: string;
+export interface AnimationStep extends Step {
   operationType: string;
   state: SimulationState;
 }

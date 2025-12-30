@@ -355,7 +355,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
       <div className="grid grid-cols-3 gap-6 overflow-y-auto pr-2">
         {/* Effect Details */}
         <div className="space-y-4">
-          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest px-1">
+          <div className="text-[10px] text-white-500 font-bold uppercase tracking-widest px-1">
             Effect 状态数据
           </div>
           {effectList.map((eff) => (
@@ -375,7 +375,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                   className={`text-[10px] px-2 py-0.5 rounded font-bold ${
                     eff.active
                       ? "bg-indigo-600 text-white"
-                      : "bg-[#2d333b] text-gray-500"
+                      : "bg-[#2d333b] text-[#ccc]"
                   }`}
                 >
                   {eff.active ? "运行中" : "空闲"}
@@ -383,13 +383,13 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               </div>
               <div className="space-y-2 text-[11px] font-mono">
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
-                  <span className="text-gray-500">depsHead:</span>
+                  <span className="text-[#ccc]">depsHead:</span>
                   <span className="text-indigo-400">
                     {eff.depsHeadId || "null"}
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
-                  <span className="text-gray-500">depsTail:</span>
+                  <span className="text-[#ccc]">depsTail:</span>
                   <span
                     className={
                       eff.depsTailId === "undefined"
@@ -407,7 +407,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
 
         {/* Link Details */}
         <div className="space-y-4">
-          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest px-1">
+          <div className="text-[10px] text-white-500 font-bold uppercase tracking-widest px-1">
             Link 节点数据
           </div>
           {linkList.map((link) => (
@@ -420,25 +420,25 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               </div>
               <div className="space-y-2 text-[11px] font-mono">
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
-                  <span className="text-gray-500">sub (Effect):</span>
+                  <span className="text-[#ccc]">sub (Effect):</span>
                   <span className="text-indigo-300">
                     {effects[link.subId]?.name}
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
-                  <span className="text-gray-500">dep (Ref):</span>
+                  <span className="text-[#ccc]">dep (Ref):</span>
                   <span className="text-orange-300">
                     {refs[link.depId]?.name}
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
-                  <span className="text-gray-500">nextDep:</span>
+                  <span className="text-[#ccc]">nextDep:</span>
                   <span className="text-gray-400">
                     {link.nextDepId || "null"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">prevDep:</span>
+                  <span className="text-[#ccc]">prevDep:</span>
                   <span className="text-gray-400">
                     {link.prevDepId || "null"}
                   </span>
@@ -447,7 +447,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
             </div>
           ))}
           {linkList.length === 0 && (
-            <div className="text-[11px] text-gray-700 italic text-center p-8 bg-[#111] rounded border border-dashed border-[#222]">
+            <div className="text-[11px] text-white-700 italic text-center p-8 bg-[#111] rounded border border-dashed border-[#222]">
               等待追踪流程启动...
             </div>
           )}
@@ -455,7 +455,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
 
         {/* Ref Details */}
         <div className="space-y-4">
-          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest px-1">
+          <div className="text-[10px] text-white-500 font-bold uppercase tracking-widest px-1">
             RefImpl 响应式数据
           </div>
           {refList.map((ref) => (
@@ -473,13 +473,13 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               </div>
               <div className="space-y-2 text-[11px] font-mono">
                 <div className="flex justify-between border-b border-[#2d333b] pb-1">
-                  <span className="text-gray-500">subsHead:</span>
+                  <span className="text-[#ccc]">subsHead:</span>
                   <span className="text-orange-300">
                     {ref.subsHeadId || "null"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">subsTail:</span>
+                  <span className="text-[#ccc]">subsTail:</span>
                   <span className="text-orange-300">
                     {ref.subsTailId || "null"}
                   </span>

@@ -2,6 +2,8 @@ import React from "react";
 import { Database, Box, Layers } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
 import type { Step } from "./constants";
+import NowHandle from '@/components/NowHandle/index'
+import TitleLayer from '@/components/TitleLayer/index'
 
 const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
   seen = [],
@@ -207,16 +209,9 @@ export default function ObjectLoop() {
   }>();
 
   return (
-    <div className="flex-1 p-6 flex flex-col h-full gap-6 overflow-hidden">
+    <div className="flex flex-col h-full gap-6 overflow-hidden">
       {/* 1. Step Description */}
-      <div className="bg-gradient-to-r from-orange-900/20 to-transparent p-4 rounded-l border-l-4 border-orange-500">
-        <h2 className="text-xs font-bold text-orange-400 uppercase mb-1">
-          当前操作
-        </h2>
-        <p className="text-lg font-medium text-gray-100">
-          {currentStep.description}
-        </p>
-      </div>
+      <NowHandle description={currentStep.description} />
 
       {/* 2. Visualizers Grid */}
       <div className="grid grid-cols-1 gap-4 shrink-0">
@@ -228,9 +223,7 @@ export default function ObjectLoop() {
 
       {/* 3. Graph */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="text-xs font-bold text-gray-500 uppercase mb-2 flex items-center gap-2">
-          <Layers className="w-3.5 h-3.5" /> 对象图表
-        </div>
+        <TitleLayer title="对象图表" element={Layers} />
         <GraphVisualizer
           activeNode={currentStep.activeNode}
           seen={currentStep.seen}

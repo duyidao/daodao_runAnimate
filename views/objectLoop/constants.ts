@@ -1,3 +1,5 @@
+import { Step } from '@/types/step'
+
 export const ObjectLoopCode = `function hasCircleRef(obj, seen = new Set()) {
   if (!(typeof obj === 'object' && obj !== null)) {
     return false
@@ -28,19 +30,16 @@ const obj = {
   }
 }`;
 
-export type Step = {
-  line: number;
-  description: string;
+export interface ObjectLoopStep extends Step {
   seen: string[];
   activeNode: string | null; // 'root' | 'a' | 'c'
   depth: number;
   isNewScope: boolean;
 };
 
-export const ObjectLoopSteps: Step[] = [
-  // --- Init ---
+export const ObjectLoopSteps: ObjectLoopStep[] = [
   {
-    line: 1,
+    highlightLines: 1,
     description: "调用 hasCircleRef(obj)",
     seen: [],
     activeNode: "root",
@@ -48,7 +47,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 2,
+    highlightLines: 2,
     description: "检查类型: obj 是对象",
     seen: [],
     activeNode: "root",
@@ -56,7 +55,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 7,
+    highlightLines: 7,
     description: "seen.has(obj)? 否",
     seen: [],
     activeNode: "root",
@@ -64,7 +63,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 8,
+    highlightLines: 8,
     description: "seen.add(obj)",
     seen: ["root"],
     activeNode: "root",
@@ -74,7 +73,7 @@ export const ObjectLoopSteps: Step[] = [
 
   // --- Branch A ---
   {
-    line: 11,
+    highlightLines: 11,
     description: "循环: key = 'a'",
     seen: ["root"],
     activeNode: "root",
@@ -82,7 +81,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 13,
+    highlightLines: 13,
     description: "递归调用 hasCircleRef(obj.a, new Set(seen))",
     seen: ["root"],
     activeNode: "root",
@@ -90,7 +89,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: true,
   },
   {
-    line: 1,
+    highlightLines: 1,
     description: "进入新作用域 (Depth 1)",
     seen: ["root"],
     activeNode: "a",
@@ -98,7 +97,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: true,
   },
   {
-    line: 7,
+    highlightLines: 7,
     description: "seen.has(obj.a)? 否 (Set 只有 root)",
     seen: ["root"],
     activeNode: "a",
@@ -106,7 +105,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 8,
+    highlightLines: 8,
     description: "seen.add(obj.a)",
     seen: ["root", "a"],
     activeNode: "a",
@@ -114,7 +113,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 11,
+    highlightLines: 11,
     description: "循环: key = 'b' (值为 2)",
     seen: ["root", "a"],
     activeNode: "a",
@@ -122,7 +121,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 13,
+    highlightLines: 13,
     description: "递归调用 hasCircleRef(2, ...)",
     seen: ["root", "a"],
     activeNode: "a",
@@ -130,7 +129,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: true,
   },
   {
-    line: 2,
+    highlightLines: 2,
     description: "检查类型: 2 不是对象，返回 false",
     seen: ["root", "a"],
     activeNode: "a",
@@ -138,7 +137,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 17,
+    highlightLines: 17,
     description: "obj.a 遍历结束，返回 false",
     seen: ["root", "a"],
     activeNode: "a",
@@ -148,7 +147,7 @@ export const ObjectLoopSteps: Step[] = [
 
   // --- Back to Root ---
   {
-    line: 11,
+    highlightLines: 11,
     description: "回到 Root。循环: key = 'c'",
     seen: ["root"],
     activeNode: "root",
@@ -158,7 +157,7 @@ export const ObjectLoopSteps: Step[] = [
 
   // --- Branch C ---
   {
-    line: 13,
+    highlightLines: 13,
     description: "递归调用 hasCircleRef(obj.c, new Set(seen))",
     seen: ["root"],
     activeNode: "root",
@@ -166,7 +165,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: true,
   },
   {
-    line: 1,
+    highlightLines: 1,
     description: "进入新作用域 (Depth 1)",
     seen: ["root"],
     activeNode: "c",
@@ -174,7 +173,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: true,
   },
   {
-    line: 7,
+    highlightLines: 7,
     description: "seen.has(obj.c)? 否 (Set 只有 root, 无 a)",
     seen: ["root"],
     activeNode: "c",
@@ -182,7 +181,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 8,
+    highlightLines: 8,
     description: "seen.add(obj.c)",
     seen: ["root", "c"],
     activeNode: "c",
@@ -190,7 +189,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 11,
+    highlightLines: 11,
     description: "循环: key = 'b' (值为 2)",
     seen: ["root", "c"],
     activeNode: "c",
@@ -198,7 +197,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 13,
+    highlightLines: 13,
     description: "递归调用 hasCircleRef(2, ...)",
     seen: ["root", "c"],
     activeNode: "c",
@@ -206,7 +205,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: true,
   },
   {
-    line: 2,
+    highlightLines: 2,
     description: "检查类型: 2 不是对象，返回 false",
     seen: ["root", "c"],
     activeNode: "c",
@@ -214,7 +213,7 @@ export const ObjectLoopSteps: Step[] = [
     isNewScope: false,
   },
   {
-    line: 17,
+    highlightLines: 17,
     description: "obj.c 遍历结束，返回 false",
     seen: ["root", "c"],
     activeNode: "c",
@@ -224,7 +223,7 @@ export const ObjectLoopSteps: Step[] = [
 
   // --- Finish ---
   {
-    line: 17,
+    highlightLines: 17,
     description: "root 遍历结束，返回 false",
     seen: ["root"],
     activeNode: "root",
