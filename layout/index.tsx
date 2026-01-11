@@ -11,13 +11,9 @@ import {
 import NavigationOverlay from "./navigationOverlay";
 import { CATEGORIES } from "@/constants";
 import { Outlet } from "react-router-dom";
-import CodeViewer from './codeViewer';
+import CodeViewer from "./codeViewer";
 
-export default function AppLayout({
-  children,
-}: {
-  children?: React.ReactNode;
-}) {
+export default function AppLayout() {
   const location = useLocation();
   const [route, setRoute] = useState({});
   const [steps, setSteps] = useState([]);
@@ -109,7 +105,11 @@ export default function AppLayout({
 
       {/* LEFT PANEL: CODE */}
       <div className="w-1/2 flex flex-col border-r border-[#333]">
-        <CodeViewer code={route.code || ""} name={route.name} activeLine={currentStep.highlightLines} />
+        <CodeViewer
+          code={route.code || ""}
+          name={route.name}
+          activeLine={currentStep.highlightLines}
+        />
       </div>
 
       {/* RIGHT PANEL: EXECUTION */}

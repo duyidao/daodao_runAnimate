@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ObjectLoop from "@/views/objectLoop/index";
 import EffectRefLink from "@/views/effectRefLink/index";
 import PromiseCancel from "@/views/promiseCancel/index";
+import AsyncOnce from "@/views/asyncOnce/index";
 import AppLayout from "@/layout/index";
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
         <Route path="/" element={<AppLayout />}>
           <Route path="/objectLoop" element={<ObjectLoop />} />
           <Route path="/effectRefLink" element={<EffectRefLink />} />
+          <Route path="/asyncOnce" element={<AsyncOnce />} />
           <Route path="/promiseCancel" element={<PromiseCancel />} />
         </Route>
       </Routes>

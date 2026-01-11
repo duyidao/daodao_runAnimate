@@ -1,10 +1,14 @@
 import { Category } from "@/types/navigationOverlay";
 import { ObjectLoopCode, ObjectLoopSteps } from "./views/objectLoop/constants";
-import { PromiseCancelCode, PromiseStatusSteps } from "./views/promiseCancel/constants";
+import {
+  PromiseCancelCode,
+  PromiseStatusSteps,
+} from "./views/promiseCancel/constants";
 import {
   EffectRefLinkCode,
   EffectRefLinkSteps,
 } from "./views/effectRefLink/constants";
+import { AsyncOnceCode, AsyncOnceSteps } from "@/views/asyncOnce/constants";
 
 export const CATEGORIES: Category[] = [
   {
@@ -21,6 +25,16 @@ export const CATEGORIES: Category[] = [
         tag: ["Promise", "频繁切换", "请求取消"],
         code: PromiseCancelCode,
         steps: PromiseStatusSteps,
+      },
+      {
+        id: "async-once",
+        path: "/asyncOnce",
+        name: "异步请求复用逻辑",
+        description:
+          "Tab 频繁切换时，容易造成新接口比旧接口早响应，导致页面数据是旧数据。灵活运用竞态取消思想，高效优雅解决该问题。",
+        tag: ["Promise", "频繁切换", "请求取消"],
+        code: AsyncOnceCode,
+        steps: AsyncOnceSteps,
       },
       {
         id: "object-loop",

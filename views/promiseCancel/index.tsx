@@ -1,15 +1,13 @@
 import React from "react";
-import { PromiseStatus } from "@/types/promiseCancel";
 import { useOutletContext } from "react-router-dom";
-import NowHandle from '@/components/NowHandle/index'
-import { Database, Box, Layers } from "lucide-react";
-import TitleLayer from '@/components/TitleLayer/index'
+import NowHandle from "@/components/NowHandle/index";
+import { Layers } from "lucide-react";
+import TitleLayer from "@/components/TitleLayer/index";
 
 const VisualizerPanel: React.FC<any> = () => {
   const { currentStep } = useOutletContext<{
     currentStep: any;
   }>();
-  console.log(currentStep);
 
   return (
     <div className="flex-1 space-y-6 animate-in fade-in slide-in-from-right-4 duration-700">

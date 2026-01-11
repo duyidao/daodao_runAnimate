@@ -1,9 +1,9 @@
 import React from "react";
 import { Database, Box, Layers } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
-import type { Step } from "./constants";
-import NowHandle from '@/components/NowHandle/index'
-import TitleLayer from '@/components/TitleLayer/index'
+import type { ObjectLoopStep } from "./constants";
+import NowHandle from "@/components/NowHandle/index";
+import TitleLayer from "@/components/TitleLayer/index";
 
 const SetVisualizer: React.FC<{ seen: string[]; isNewScope: boolean }> = ({
   seen = [],
@@ -205,7 +205,7 @@ const GraphVisualizer: React.FC<{
 
 export default function ObjectLoop() {
   const { currentStep } = useOutletContext<{
-    currentStep: Step;
+    currentStep: ObjectLoopStep;
   }>();
 
   return (

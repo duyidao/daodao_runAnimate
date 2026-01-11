@@ -1,7 +1,4 @@
-export interface Step {
-  line: number;
-  description: string;
-}
+import type { Step } from "./step";
 
 export interface Scenario {
   id: string;
