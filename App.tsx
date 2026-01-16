@@ -1,9 +1,22 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ObjectLoop from "@/views/objectLoop/index";
-import EffectRefLink from "@/views/effectRefLink/index";
-import PromiseCancel from "@/views/promiseCancel/index";
-import AsyncOnce from "@/views/asyncOnce/index";
+import ObjectLoop from "@/views/js/objectLoop/index";
+import EffectRefLink from "@/views/vue/effectRefLink/index";
+import PromiseCancel from "@/views/js/promiseCancel/index";
+import AsyncOnce from "@/views/js/asyncOnce/index";
 import AppLayout from "@/layout/index";
+import { debounce } from "lodash-es";
+
+const getFontSize = () => {
+  document.documentElement.style.fontSize = `${Math.max(
+    12,
+    Math.min(window.innerWidth / 100, 20)
+  )}px`;
+};
+getFontSize();
+window.addEventListener(
+  "resize",
+  debounce(() => getFontSize(), 100)
+);
 
 export default function App() {
   return (

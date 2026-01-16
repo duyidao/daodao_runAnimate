@@ -118,15 +118,15 @@ export default function AppLayout() {
         style={{ backgroundColor: "rgba(39, 26, 17, 0.3)" }}
       >
         {/* Header Area */}
-        <div className="h-16 px-6 border-b border-[#333] flex items-center justify-between">
+        <div className="h-16 px-6 border-b border-[#333] flex items-center justify-between text-[12px]">
           <h1
-            className="text-sm font-bold text-gray-200 flex items-center gap-2 bg-stone-800/80 hover:bg-orange-900/30 px-5 py-2 rounded-xl border border-stone-700 transition-all active:scale-95 group shadow-xl shadow-black/40 cursor-pointer"
+            className="font-bold text-gray-200 flex items-center gap-2 bg-stone-800/80 hover:bg-orange-900/30 px-5 py-2 rounded-xl border border-stone-700 transition-all active:scale-95 group shadow-xl shadow-black/40 cursor-pointer"
             onClick={() => setIsNavOpen(true)}
           >
             <Box className="w-4 h-4 text-orange-500" />
-            执行流程
+            切换执行流程
           </h1>
-          <div className="text-xs font-mono text-gray-500">
+          <div className="font-mono">
             步骤 {currentStepIndex + 1} / {steps?.length}
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function AppLayout() {
         <div className="h-20 border-t border-[#333] bg-[#1a1a1a] flex items-center justify-center gap-4 px-6 shrink-0">
           <button
             onClick={handleReset}
-            className="p-2.5 rounded-full text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+            className="p-2.5 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white transition-colors"
             title="重置"
           >
             <RotateCcw className="w-5 h-5" />
@@ -152,7 +152,7 @@ export default function AppLayout() {
           <button
             onClick={handlePrev}
             disabled={currentStepIndex === 0}
-            className="p-2.5 rounded-full text-gray-400 hover:bg-gray-800 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+            className="p-2.5 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
             title="上一步"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -160,7 +160,7 @@ export default function AppLayout() {
 
           <button
             onClick={() => handlePlayPause(!isPlaying)}
-            className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all transform active:scale-95 ${
+            className={`w-[3rem] h-[3rem] rounded-[1.05rem] flex items-center justify-center shadow-lg transition-all transform active:scale-95 ${
               isPlaying
                 ? "bg-yellow-500 hover:bg-yellow-400 text-black"
                 : "bg-orange-600 hover:bg-orange-500 text-white"
@@ -176,7 +176,7 @@ export default function AppLayout() {
           <button
             onClick={handleNext}
             disabled={currentStepIndex === steps?.length - 1}
-            className="p-2.5 rounded-full text-gray-400 hover:bg-gray-800 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+            className="p-2.5 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
             title="下一步"
           >
             <ChevronRight className="w-6 h-6" />
@@ -185,7 +185,7 @@ export default function AppLayout() {
           <div className="w-px h-8 bg-gray-700 mx-2"></div>
 
           <div className="flex flex-col gap-1 w-24">
-            <span className="text-[10px] text-gray-500 font-mono text-center">
+            <span className="text-[11px] text-gray-200 font-mono text-center mb-1">
               速度
             </span>
             <input
@@ -197,7 +197,7 @@ export default function AppLayout() {
               onChange={(e) =>
                 setPlaybackSpeed(2200 - parseInt(e.target.value))
               }
-              className="h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-gray-400 [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:bg-white"
+              className="h-1 bg-orange-500/30 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-orange-400/80 [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:bg-orange-500"
             />
           </div>
         </div>

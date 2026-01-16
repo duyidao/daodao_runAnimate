@@ -4,7 +4,7 @@ import {
   RefNode,
   EffectNode,
   Link,
-} from "../../../types/types";
+} from "@/types/effectRefLink";
 
 interface VisualizerProps {
   state: SimulationState;
@@ -19,25 +19,17 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
 
   // Graph Layout Positions
   const EFFECT_POS = { x: 120, y: 220 };
-  const getLinkX = (i: number) => 400 + i * 300;
+  const getLinkX = (i: number) => 420 + i * 300;
   const LINK_Y = 220;
-  const getRefX = (i: number) => 400 + i * 300;
+  const getRefX = (i: number) => 420 + i * 300;
   const REF_Y = 60;
 
   return (
-    <div className="relative flex-1 flex flex-col gap-6 bg-[#0d0f1233] rounded-xl border border-[#1f2228] overflow-hidden p-6">
-      {/* Background Grid */}
-      <div
-        className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(#4f46e5 1px, transparent 0)",
-          backgroundSize: "32px 32px",
-        }}
-      ></div>
-
+    <div className="relative flex-1 flex flex-col gap-6">
       {/* SVG Diagram Area */}
-      <div className="relative h-[320px] bg-[#0d0f12]/40 rounded-lg border border-[#1f2228] shadow-inner overflow-hidden">
+      <div className="relative h-[15rem] bg-[#0d0f12]/40 rounded-lg border border-[#1f2228] shadow-inner overflow-hidden pt-2.5">
         <svg className="w-full h-full" viewBox="0 0 1100 400">
+          {/* effect的箭头 */}
           <defs>
             <marker
               id="arrow"
@@ -48,6 +40,26 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               orient="auto"
             >
               <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1" />
+            </marker>
+            <marker
+              id="arrow-green"
+              markerWidth="10"
+              markerHeight="10"
+              refX="9"
+              refY="5"
+              orient="auto"
+            >
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#6ddf6d" />
+            </marker>
+            <marker
+              id="arrow-pink"
+              markerWidth="10"
+              markerHeight="10"
+              refX="9"
+              refY="5"
+              orient="auto"
+            >
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#ed6d8f" />
             </marker>
             <marker
               id="arrow-red"
@@ -77,20 +89,20 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {headIdx !== -1 && (
                   <g>
                     <path
-                      d={`M ${EFFECT_POS.x + 85} ${EFFECT_POS.y + 12} L ${
-                        getLinkX(headIdx) - 85
+                      d={`M ${EFFECT_POS.x + 92} ${EFFECT_POS.y + 12} L ${
+                        getLinkX(headIdx) - 62
                       } ${LINK_Y + 12}`}
                       fill="none"
-                      stroke="#6366f1"
+                      stroke="#ed6d8f"
                       strokeWidth="2"
-                      markerEnd="url(#arrow)"
+                      markerEnd="url(#arrow-pink)"
                       className="transition-all duration-500"
                     />
                     <text
-                      x={(EFFECT_POS.x + getLinkX(headIdx)) / 2}
-                      y={EFFECT_POS.y + 32}
+                      x={(EFFECT_POS.x + getLinkX(headIdx)) / 2 + 10}
+                      y={EFFECT_POS.y + 36}
                       textAnchor="middle"
-                      className="fill-indigo-300 font-mono text-[11px] font-medium tracking-tighter"
+                      className="fill-[#ed6d8f] font-mono text-[1.00rem] font-medium tracking-tighter"
                     >
                       dep
                     </text>
@@ -100,20 +112,20 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {headIdx !== -1 && (
                   <g>
                     <path
-                      d={`M ${getLinkX(headIdx) - 85} ${LINK_Y - 12} L ${
-                        EFFECT_POS.x + 85
-                      } ${EFFECT_POS.y - 12}`}
+                      d={`M ${getLinkX(headIdx) - 62} ${LINK_Y - 18} L ${
+                        EFFECT_POS.x + 90
+                      } ${EFFECT_POS.y - 18}`}
                       fill="none"
-                      stroke="#6366f1"
+                      stroke="#6ddf6d"
                       strokeWidth="2"
-                      markerEnd="url(#arrow)"
+                      markerEnd="url(#arrow-green)"
                       className="transition-all duration-500"
                     />
                     <text
-                      x={(EFFECT_POS.x + getLinkX(headIdx)) / 2}
-                      y={EFFECT_POS.y - 20}
+                      x={(EFFECT_POS.x + getLinkX(headIdx)) / 2 + 10}
+                      y={EFFECT_POS.y - 28}
                       textAnchor="middle"
-                      className="fill-indigo-300 font-mono text-[11px] font-medium tracking-tighter"
+                      className="fill-[#6ddf6d] font-mono text-[1.00rem] font-medium tracking-tighter"
                     >
                       sub
                     </text>
@@ -123,9 +135,9 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {isUndefined ? (
                   <g>
                     <path
-                      d={`M ${EFFECT_POS.x} ${EFFECT_POS.y + 45} L ${
+                      d={`M ${EFFECT_POS.x} ${EFFECT_POS.y + 38} L ${
                         EFFECT_POS.x
-                      } ${EFFECT_POS.y + 95}`}
+                      } ${EFFECT_POS.y + 102}`}
                       fill="none"
                       stroke="#ef4444"
                       strokeWidth="2"
@@ -133,10 +145,10 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                       markerEnd="url(#arrow-red)"
                     />
                     <text
-                      x={EFFECT_POS.x - 60}
-                      y={EFFECT_POS.y + 122}
+                      x={EFFECT_POS.x - 95}
+                      y={EFFECT_POS.y + 128}
                       textAnchor="start"
-                      className="fill-red-400 font-mono text-[11px] font-bold"
+                      className="fill-red-400 font-mono text-[1.00rem] font-bold"
                     >
                       depsTail: undefined
                     </text>
@@ -145,21 +157,21 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                   tailIdx !== -1 && (
                     <g>
                       <path
-                        d={`M ${EFFECT_POS.x} ${EFFECT_POS.y + 45} L ${
+                        d={`M ${EFFECT_POS.x} ${EFFECT_POS.y + 39} L ${
                           EFFECT_POS.x
-                        } ${EFFECT_POS.y + 140} L ${getLinkX(tailIdx)} ${
+                        } ${EFFECT_POS.y + 140} L ${getLinkX(tailIdx) + 20} ${
                           EFFECT_POS.y + 140
-                        } L ${getLinkX(tailIdx)} ${LINK_Y + 45}`}
+                        } L ${getLinkX(tailIdx) + 20} ${LINK_Y + 39}`}
                         fill="none"
-                        stroke="#818cf8"
+                        stroke="#ed6d8f"
                         strokeWidth="1.5"
-                        markerEnd="url(#arrow)"
+                        markerEnd="url(#arrow-pink)"
                         className="transition-all duration-500"
                       />
                       <text
-                        x={EFFECT_POS.x + 8}
-                        y={EFFECT_POS.y + 130}
-                        className="fill-indigo-300 font-mono text-[10px] font-medium"
+                        x={getLinkX(tailIdx) / 2 + 20}
+                        y={EFFECT_POS.y + 125}
+                        className="fill-[#ed6d8f] font-mono text-[1.00rem] font-medium"
                       >
                         depsTail
                       </text>
@@ -182,19 +194,19 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {link.nextDepId && (
                   <g>
                     <path
-                      d={`M ${linkX + 85} ${LINK_Y} L ${
-                        getLinkX(i + 1) - 85
+                      d={`M ${linkX + 119} ${LINK_Y} L ${
+                        getLinkX(i + 1) - 69
                       } ${LINK_Y}`}
                       fill="none"
-                      stroke="#6366f1"
+                      stroke="#ed6d8f"
                       strokeWidth="2"
-                      markerEnd="url(#arrow)"
+                      markerEnd="url(#arrow-pink)"
                     />
                     <text
-                      x={linkX + 115}
+                      x={linkX + 170}
                       y={LINK_Y - 12}
                       textAnchor="middle"
-                      className="fill-indigo-300 font-mono text-[11px] font-medium tracking-tighter"
+                      className="fill-[#ed6d8f] font-mono text-[1.00rem] font-medium tracking-tighter"
                     >
                       nextDep
                     </text>
@@ -205,19 +217,19 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {refIdx !== -1 && (
                   <g>
                     <path
-                      d={`M ${linkX - 35} ${LINK_Y - 45} L ${linkX - 35} ${
+                      d={`M ${linkX - 25} ${LINK_Y - 51} L ${linkX - 25} ${
                         REF_Y + 30
                       }`}
                       fill="none"
-                      stroke="#6366f1"
+                      stroke="#ed6d8f"
                       strokeWidth="1.5"
-                      markerEnd="url(#arrow)"
+                      markerEnd="url(#arrow-pink)"
                     />
                     <text
-                      x={linkX - 45}
+                      x={linkX - 38}
                       y={(LINK_Y + REF_Y) / 2}
                       textAnchor="end"
-                      className="fill-orange-300 font-mono text-[10px] font-medium"
+                      className="fill-[#ed6d8f] font-mono text-[1.00rem] font-medium"
                     >
                       dep
                     </text>
@@ -228,17 +240,28 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {refIdx !== -1 && (
                   <g>
                     <path
-                      d={`M ${refX} ${REF_Y + 30} L ${refX} ${LINK_Y - 45}`}
+                      d={`M ${refX + 28} ${REF_Y + 30} L ${refX + 28} ${
+                        LINK_Y - 51
+                      }`}
                       fill="none"
-                      stroke="#6366f1"
+                      stroke="#6ddf6dff"
                       strokeWidth="1.5"
-                      markerEnd="url(#arrow)"
+                      markerEnd="url(#arrow-green)"
+                    />
+                    <rect
+                      x={refX + 3}
+                      y={(LINK_Y + REF_Y) / 2 - 10 - 18} // 调整y坐标使文本居中于背景
+                      width={55}
+                      height={25}
+                      fill="#121111" // 设置背景色
+                      rx="4" // 添加圆角（可选）
+                      ry="4"
                     />
                     <text
                       x={refX + 8}
                       y={(LINK_Y + REF_Y) / 2 - 10}
                       textAnchor="start"
-                      className="fill-orange-300 font-mono text-[10px] font-medium"
+                      className="fill-[#6ddf6dff] bg-transparent font-mono text-[1.00rem] font-medium"
                     >
                       subs
                     </text>
@@ -249,20 +272,20 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
                 {refIdx !== -1 && refs[link.depId]?.subsTailId === link.id && (
                   <g>
                     <path
-                      d={`M ${refX + 35} ${REF_Y + 30} L ${refX + 35} ${
-                        LINK_Y - 45
+                      d={`M ${refX + 78} ${REF_Y + 30} L ${refX + 78} ${
+                        LINK_Y - 51
                       }`}
                       fill="none"
-                      stroke="#6366f1"
+                      stroke="#6ddf6d"
                       strokeWidth="1.5"
-                      strokeDasharray="3"
-                      markerEnd="url(#arrow)"
+                      strokeDasharray="5"
+                      markerEnd="url(#arrow-green)"
                     />
                     <text
-                      x={refX + 42}
-                      y={(LINK_Y + REF_Y) / 2 + 15}
+                      x={refX + 88}
+                      y={(LINK_Y + REF_Y) / 2 - 5}
                       textAnchor="start"
-                      className="fill-orange-300 font-mono text-[10px] font-medium opacity-80"
+                      className="fill-[#6ddf6d] font-mono text-[1.00rem] font-medium"
                     >
                       subsTail
                     </text>
@@ -272,8 +295,6 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
             );
           })}
 
-          {/* Render Actual Nodes */}
-
           {/* Effect Node */}
           {effectList.map((eff) => (
             <g
@@ -282,9 +303,9 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
             >
               <rect
                 x="-85"
-                y="-45"
+                y="-40"
                 width="170"
-                height="90"
+                height="69"
                 rx="10"
                 fill="#1e293b"
                 stroke={eff.active ? "#818cf8" : "#334155"}
@@ -293,8 +314,8 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               />
               <text
                 textAnchor="middle"
-                dy="5"
-                className={`font-mono text-2xl font-bold uppercase tracking-wider ${
+                dy="1"
+                className={`font-mono text-[1.25rem] font-bold uppercase tracking-wider ${
                   eff.active ? "fill-orange-100" : "fill-indigo-300"
                 }`}
               >
@@ -307,10 +328,10 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
           {refList.map((ref, i) => (
             <g key={ref.id} transform={`translate(${getRefX(i)}, ${REF_Y})`}>
               <rect
-                x="-85"
-                y="-30"
+                x="-55"
+                y="-50"
                 width="170"
-                height="60"
+                height="69"
                 rx="30"
                 fill="#3b2d1eff"
                 stroke="#f6953bff"
@@ -318,8 +339,9 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               />
               <text
                 textAnchor="middle"
-                dy="5"
-                className="fill-orange-200 font-mono text-2xl font-bold tracking-wide uppercase"
+                dy="-5"
+                dx="30"
+                className="fill-orange-200 font-mono text-[1.25rem] font-bold tracking-wide uppercase"
               >
                 {ref.name}
               </text>
@@ -330,10 +352,10 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
           {linkList.map((link, i) => (
             <g key={link.id} transform={`translate(${getLinkX(i)}, ${LINK_Y})`}>
               <rect
-                x="-85"
-                y="-45"
+                x="-55"
+                y="-40"
                 width="170"
-                height="90"
+                height="69"
                 rx="10"
                 fill="#3b2d1eff"
                 stroke="#f6953bff"
@@ -341,8 +363,9 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
               />
               <text
                 textAnchor="middle"
-                dy="5"
-                className="fill-orange-100 font-mono text-2xl font-bold tracking-widest"
+                dy="1"
+                dx="25"
+                className="fill-orange-100 font-mono text-[1.25rem] font-bold tracking-widest"
               >
                 {link.id}
               </text>
@@ -352,7 +375,7 @@ const Visualizer: React.FC<VisualizerProps> = ({ state }) => {
       </div>
 
       {/* Grid of Cards for Object Data */}
-      <div className="grid grid-cols-3 gap-6 overflow-y-auto pr-2">
+      <div className="grid grid-cols-3 gap-6 mb-3">
         {/* Effect Details */}
         <div className="space-y-4">
           <div className="text-[10px] text-white-500 font-bold uppercase tracking-widest px-1">

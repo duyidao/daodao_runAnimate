@@ -7,7 +7,6 @@ import {
   Database,
   CheckCircle2,
   Loader2,
-  Braces,
   Activity,
 } from "lucide-react";
 import NowHandle from "@/components/NowHandle/index";
@@ -44,7 +43,7 @@ const Visualizer: React.FC<VisualizerProps> = () => {
   }, [map]);
 
   return (
-    <div className="flex-1 flex flex-col gap-6 rounded-xl border border-[#1f2228] overflow-hidden p-6 relative">
+    <div className="flex flex-col gap-6 relative">
       {/* Action Banner */}
       <NowHandle description={currentStep.description} />
 
@@ -57,10 +56,10 @@ const Visualizer: React.FC<VisualizerProps> = () => {
       ></div>
 
       {/* 核心可视化区 */}
-      <div className="relative h-[340px] border border-[#1f2228] bg-[#0d0f12]/20 rounded-lg shadow-inner flex items-center justify-around px-8">
+      <div className="relative h-[20rem] border border-[#1f2228] bg-[#0d0f12]/20 rounded-lg shadow-inner flex items-center justify-around px-8">
         {/* 调用者列表 (User A, B, C) */}
-        <div className="flex flex-col gap-4 z-10 w-48">
-          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest text-center mb-1">
+        <div className="flex flex-col gap-4 z-10 w-[10.5rem]">
+          <div className="text-[0.75rem] text-gray-400 font-bold uppercase tracking-widest text-center mb-1">
             并发请求方 (Clients)
           </div>
           {callers?.map((c) => (
@@ -85,14 +84,9 @@ const Visualizer: React.FC<VisualizerProps> = () => {
                 }
               />
               <div className="flex flex-col flex-1 min-w-0">
-                <span className="text-[11px] font-mono font-bold truncate">
+                <span className="text-[0.6rem] font-mono font-bold truncate">
                   {c.id}
                 </span>
-                {c.result && (
-                  <span className="text-[9px] text-green-400 truncate animate-in slide-in-from-left-1">
-                    {c.result}
-                  </span>
-                )}
               </div>
               {c.status === "pending" && (
                 <Loader2 size={12} className="animate-spin text-orange-500" />
@@ -105,7 +99,7 @@ const Visualizer: React.FC<VisualizerProps> = () => {
         </div>
 
         {/* Map Entry 内部结构透视 */}
-        <div className="flex flex-col items-center gap-4 flex-1 max-w-[320px]">
+        <div className="flex flex-col items-center gap-4 flex-1 max-w-[18.5rem]">
           <div
             className={`relative w-full p-5 rounded-2xl bg-[#161a22] border-2 transition-all duration-500 ${
               activeEntry
@@ -116,18 +110,17 @@ const Visualizer: React.FC<VisualizerProps> = () => {
             <div className="flex items-center justify-between mb-4 border-b border-[#2d333b] pb-2">
               <div className="flex items-center gap-2">
                 <Database size={16} className="text-indigo-400" />
-                <span className="text-xs font-bold text-indigo-100 font-mono tracking-tighter">
+                <span className="text-2xs font-bold text-indigo-100 font-mono tracking-tighter">
                   Entry: "{activeEntryKey || "..."}"
                 </span>
               </div>
-              <Braces size={14} className="text-gray-600" />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 text-[0.7rem]">
               {/* resolve 数组 */}
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center px-1">
-                  <span className="text-[9px] font-black uppercase text-green-500/70">
+                  <span className="font-black uppercase text-green-500/70">
                     resolve: Array({activeEntry?.resolveQueue.length || 0})
                   </span>
                 </div>
@@ -135,15 +128,13 @@ const Visualizer: React.FC<VisualizerProps> = () => {
                   {activeEntry?.resolveQueue.map((id, i) => (
                     <div
                       key={i}
-                      className="px-2 py-0.5 bg-green-900/30 text-green-400 border border-green-500/30 rounded text-[9px] font-mono font-bold animate-in zoom-in"
+                      className="px-2 py-0.5 bg-green-900/30 text-green-400 border border-green-500/30 rounded font-mono font-bold animate-in zoom-in"
                     >
                       {id}
                     </div>
                   ))}
                   {(!activeEntry || activeEntry.resolveQueue.length === 0) && (
-                    <span className="text-[9px] text-gray-700 italic">
-                      empty
-                    </span>
+                    <span className="text-gray-700 italic">empty</span>
                   )}
                 </div>
               </div>
@@ -151,7 +142,7 @@ const Visualizer: React.FC<VisualizerProps> = () => {
               {/* reject 数组 */}
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center px-1">
-                  <span className="text-[9px] font-black uppercase text-red-500/70">
+                  <span className="font-black uppercase text-red-500/70">
                     reject: Array({activeEntry?.rejectQueue.length || 0})
                   </span>
                 </div>
@@ -159,15 +150,13 @@ const Visualizer: React.FC<VisualizerProps> = () => {
                   {activeEntry?.rejectQueue.map((id, i) => (
                     <div
                       key={i}
-                      className="px-2 py-0.5 bg-red-900/30 text-red-400 border border-red-500/30 rounded text-[9px] font-mono font-bold animate-in zoom-in"
+                      className="px-2 py-0.5 bg-red-900/30 text-red-400 border border-red-500/30 rounded font-mono font-bold animate-in zoom-in"
                     >
                       {id}
                     </div>
                   ))}
                   {(!activeEntry || activeEntry.rejectQueue.length === 0) && (
-                    <span className="text-[9px] text-gray-700 italic">
-                      empty
-                    </span>
+                    <span className="text-gray-700 italic">empty</span>
                   )}
                 </div>
               </div>
@@ -183,12 +172,10 @@ const Visualizer: React.FC<VisualizerProps> = () => {
                         : "text-gray-600"
                     }
                   />
-                  <span className="text-[10px] font-bold text-gray-400">
-                    isPending
-                  </span>
+                  <span className="font-bold text-gray-400">isPending</span>
                 </div>
                 <span
-                  className={`text-[10px] font-mono font-black ${
+                  className={`font-mono font-black ${
                     activeEntry?.isPending ? "text-orange-400" : "text-gray-600"
                   }`}
                 >
@@ -201,15 +188,10 @@ const Visualizer: React.FC<VisualizerProps> = () => {
               </div>
             </div>
           </div>
-          {activeEntry && (
-            <div className="text-[10px] text-indigo-400/60 font-mono animate-pulse">
-              内存地址: 0x7b2...a4e
-            </div>
-          )}
         </div>
 
         {/* 外部网络接口 */}
-        <div className="flex flex-col items-center w-36">
+        <div className="flex flex-col items-center w-[7.5rem]">
           <div
             className={`p-6 rounded-full border-2 transition-all duration-700 ${
               apiStatus === "fetching"
@@ -230,7 +212,7 @@ const Visualizer: React.FC<VisualizerProps> = () => {
               }
             />
           </div>
-          <div className="mt-4 text-[10px] font-mono text-center flex flex-col gap-1">
+          <div className="mt-4 text-[0.75rem] font-mono text-center flex flex-col gap-1">
             <span
               className={
                 apiStatus === "fetching"
@@ -238,65 +220,19 @@ const Visualizer: React.FC<VisualizerProps> = () => {
                   : "text-gray-600"
               }
             >
-              {apiStatus === "fetching" ? "IN FLIGHT..." : "IDLE"}
+              {apiStatus === "fetching" ? "请求中..." : "空闲"}
             </span>
-            <span className="text-[8px] text-gray-700">
+            <span className="text-[0.6rem] text-gray-300">
               api.github.com/users
             </span>
           </div>
         </div>
-
-        {/* 交互连线 */}
-        <svg className="absolute inset-0 pointer-events-none w-full h-full">
-          <defs>
-            <marker
-              id="arrow-head"
-              markerWidth="8"
-              markerHeight="8"
-              refX="7"
-              refY="4"
-              orient="auto"
-            >
-              <path d="M 0 0 L 8 4 L 0 8 z" fill="#4f46e5" />
-            </marker>
-          </defs>
-
-          {/* 用户到逻辑中心 */}
-          {callers?.map(
-            (c, i) =>
-              c.status !== "idle" && (
-                <path
-                  key={c.id}
-                  d={`M 190 ${115 + i * 55} C 260 ${
-                    115 + i * 55
-                  } 260 170 340 170`}
-                  fill="none"
-                  stroke="#4f46e5"
-                  strokeWidth="1.2"
-                  strokeDasharray="5 3"
-                  opacity="0.4"
-                />
-              )
-          )}
-
-          {/* 逻辑中心到 API */}
-          {activeEntry?.isPending && (
-            <path
-              d="M 660 170 L 760 170"
-              fill="none"
-              stroke="#6366f1"
-              strokeWidth="3"
-              markerEnd="url(#arrow-head)"
-              className="animate-in fade-in"
-            />
-          )}
-        </svg>
       </div>
 
       {/* Map 实例实时转储表格 */}
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
-          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest flex items-center gap-2">
+          <div className="text-[0.65rem] text-gray-500 font-bold uppercase tracking-widest flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></div>
             Map 实例状态转储 (Memory Dump)
           </div>
@@ -339,7 +275,7 @@ const Visualizer: React.FC<VisualizerProps> = () => {
                     </td>
                     <td className="py-3 px-2">
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-black ${
+                        className={`px-2 py-0.5 rounded text-[0.6rem] font-black ${
                           value?.isPending
                             ? "bg-orange-600/30 text-orange-400 border border-orange-500/30"
                             : "bg-gray-800/50 text-gray-500"

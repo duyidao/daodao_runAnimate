@@ -34,16 +34,19 @@ const CodeViewer: React.FC<{
       <div ref={scrollRef} className="flex-1 overflow-auto p-4 leading-6">
         {lines.map((line, index) => {
           const lineNumber = index + 1;
-          const isActive = activeLine instanceof Array ? activeLine.includes(lineNumber) : lineNumber === activeLine;
+          const isActive =
+            activeLine instanceof Array
+              ? activeLine.includes(lineNumber)
+              : lineNumber === activeLine;
           return (
             <div
               key={index}
-              className={`flex items-center transition-colors duration-200 ${
+              className={`flex items-center transition-colors duration-200 text-[0.8rem] ${
                 isActive ? "bg-[#37373d]" : "hover:bg-[#2a2a2d]"
               }`}
             >
               <span
-                className={`w-8 text-right pr-4 select-none text-xs pt-[2px] ${
+                className={`w-8 text-right pr-4 select-none pt-[2px] ${
                   isActive ? "text-gray-200 font-bold" : "text-gray-600"
                 }`}
               >

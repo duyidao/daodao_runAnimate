@@ -2,8 +2,8 @@ import React from "react";
 import Visualizer from "./components/Visualizer";
 import { useOutletContext } from "react-router-dom";
 import { Workflow } from "lucide-react";
-import NowHandle from '@/components/NowHandle/index'
-import TitleLayer from '@/components/TitleLayer/index'
+import NowHandle from "@/components/NowHandle/index";
+import TitleLayer from "@/components/TitleLayer/index";
 
 export default function EffectRefLink() {
   const { currentStep } = useOutletContext<{

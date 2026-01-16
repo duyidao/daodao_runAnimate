@@ -1,14 +1,17 @@
 import { Category } from "@/types/navigationOverlay";
-import { ObjectLoopCode, ObjectLoopSteps } from "./views/objectLoop/constants";
+import {
+  ObjectLoopCode,
+  ObjectLoopSteps,
+} from "./views/js/objectLoop/constants";
 import {
   PromiseCancelCode,
   PromiseStatusSteps,
-} from "./views/promiseCancel/constants";
+} from "./views/js/promiseCancel/constants";
 import {
   EffectRefLinkCode,
   EffectRefLinkSteps,
-} from "./views/effectRefLink/constants";
-import { AsyncOnceCode, AsyncOnceSteps } from "@/views/asyncOnce/constants";
+} from "./views/vue/effectRefLink/constants";
+import { AsyncOnceCode, AsyncOnceSteps } from "@/views/js/asyncOnce/constants";
 
 export const CATEGORIES: Category[] = [
   {
