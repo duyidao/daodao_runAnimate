@@ -56,8 +56,6 @@ const INITIAL_STATE: SimulationState = {
   description: "准备演示接口请求复用...",
 };
 
-const KEY = "[]";
-
 export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 43,
@@ -106,12 +104,9 @@ export const AsyncOnceSteps: AnimationStep[] = [
       ...INITIAL_STATE,
       highlightedLine: 16,
       map: {
-        [KEY]: {
-          resolveQueue: [],
-          rejectQueue: [],
-          isPending: false,
-          key: KEY,
-        },
+        resolveQueue: [],
+        isPending: false,
+        user: [],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -127,12 +122,9 @@ export const AsyncOnceSteps: AnimationStep[] = [
       ...INITIAL_STATE,
       highlightedLine: 22,
       map: {
-        [KEY]: {
-          resolveQueue: [],
-          rejectQueue: [],
-          isPending: false,
-          key: KEY,
-        },
+        resolveQueue: [],
+        isPending: false,
+        user: [],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -148,12 +140,9 @@ export const AsyncOnceSteps: AnimationStep[] = [
       ...INITIAL_STATE,
       highlightedLine: 24,
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A"],
-          rejectQueue: [],
-          isPending: false,
-          key: KEY,
-        },
+        paddngQueue: [],
+        isPending: false,
+        user: [],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -164,17 +153,14 @@ export const AsyncOnceSteps: AnimationStep[] = [
   },
   {
     highlightLines: 27,
-    description: "7. 检查 isPending，当前为 false，准备执行真实 fetch。",
+    description: "7. 判断 isPending，当前为 false，准备发起请求。",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 27,
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A"],
-          rejectQueue: ["User_A"],
-          isPending: false,
-          key: KEY,
-        },
+        paddngQueue: ["User_A"],
+        isPending: false,
+        user: [],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -190,12 +176,9 @@ export const AsyncOnceSteps: AnimationStep[] = [
       ...INITIAL_STATE,
       highlightedLine: 29,
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A"],
-          rejectQueue: ["User_A"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A"],
+        isPending: true,
+        user: [{ id: "User_A", isPending: true }],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -212,12 +195,9 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 30,
       apiStatus: "fetching",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A"],
-          rejectQueue: ["User_A"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A"],
+        isPending: true,
+        user: [{ id: "User_A", isPending: true }],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -228,18 +208,18 @@ export const AsyncOnceSteps: AnimationStep[] = [
   },
   {
     highlightLines: 43,
-    description: "10. User_B 几乎同时发起 loadOnce() 请求。",
+    description: "10. User_B 也需要发起相同的请求。",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 43,
       apiStatus: "fetching",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A"],
-          rejectQueue: ["User_A"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A", "User_B"],
+        isPending: true,
+        user: [
+          { id: "User_A", isPending: true },
+          { id: "User_B", isPending: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -256,12 +236,12 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 24,
       apiStatus: "fetching",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A", "User_B"],
-          rejectQueue: ["User_A", "User_B"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A", "User_B"],
+        isPending: true,
+        user: [
+          { id: "User_A", isPending: true },
+          { id: "User_B", isPending: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -279,12 +259,12 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 27,
       apiStatus: "fetching",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A", "User_B"],
-          rejectQueue: ["User_A", "User_B"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A", "User_B"],
+        isPending: true,
+        user: [
+          { id: "User_A", isPending: true },
+          { id: "User_B", isPending: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -301,12 +281,13 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 43,
       apiStatus: "fetching",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A", "User_B"],
-          rejectQueue: ["User_A", "User_B"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A", "User_B", "User_C"],
+        isPending: true,
+        user: [
+          { id: "User_A", isPending: true },
+          { id: "User_B", isPending: true },
+          { id: "User_C", isPending: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -323,12 +304,13 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 24,
       apiStatus: "fetching",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A", "User_B", "User_C"],
-          rejectQueue: ["User_A", "User_B", "User_C"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A", "User_B", "User_C"],
+        isPending: true,
+        user: [
+          { id: "User_A", isPending: true },
+          { id: "User_B", isPending: true },
+          { id: "User_C", isPending: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -345,12 +327,13 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 2,
       apiStatus: "success",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A", "User_B", "User_C"],
-          rejectQueue: ["User_A", "User_B", "User_C"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: ["User_A", "User_B", "User_C"],
+        isPending: true,
+        user: [
+          { id: "User_A", isPending: true },
+          { id: "User_B", isPending: true },
+          { id: "User_C", isPending: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "pending" },
@@ -367,12 +350,14 @@ export const AsyncOnceSteps: AnimationStep[] = [
       highlightedLine: 32,
       apiStatus: "success",
       map: {
-        [KEY]: {
-          resolveQueue: ["User_A", "User_B", "User_C"],
-          rejectQueue: ["User_A", "User_B", "User_C"],
-          isPending: true,
-          key: KEY,
-        },
+        paddngQueue: [],
+        resolveQueue: ["User_A", "User_B", "User_C"],
+        isPending: false,
+        user: [
+          { id: "User_A", isPending: false, status: true },
+          { id: "User_B", isPending: false, status: true },
+          { id: "User_C", isPending: false, status: true },
+        ],
       },
       callers: [
         { id: "User_A", status: "resolved", result: "{login: 'octocat'}" },
@@ -388,7 +373,16 @@ export const AsyncOnceSteps: AnimationStep[] = [
       ...INITIAL_STATE,
       highlightedLine: 38,
       apiStatus: "success",
-      map: { [KEY]: null },
+      map: {
+        paddngQueue: [],
+        resolveQueue: ["User_A", "User_B", "User_C"],
+        isPending: false,
+        user: [
+          { id: "User_A", isPending: false, status: true },
+          { id: "User_B", isPending: false, status: true },
+          { id: "User_C", isPending: false, status: true },
+        ],
+      },
       callers: [
         { id: "User_A", status: "resolved", result: "{login: 'octocat'}" },
         { id: "User_B", status: "resolved", result: "{login: 'octocat'}" },

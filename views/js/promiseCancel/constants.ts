@@ -137,7 +137,7 @@ export const PromiseStatusSteps = [
     actionTitle: "创建 Promise #2",
     cancelVariableStatus: "set-for-1",
     tasks: [
-      { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
+      { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: false },
       { id: 2, status: PromiseStatus.PENDING, result: null, isStale: false },
     ],
     terminalOutput: ["> Promise #2 已进入 Pending 状态"],
@@ -150,7 +150,7 @@ export const PromiseStatusSteps = [
     actionTitle: "触发任务 #1 取消",
     cancelVariableStatus: "set-for-1",
     tasks: [
-      { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
+      { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: false },
       { id: 2, status: PromiseStatus.PENDING, result: null, isStale: false },
     ],
     terminalOutput: [
@@ -166,7 +166,7 @@ export const PromiseStatusSteps = [
     actionTitle: "重置任务 #1 指针",
     cancelVariableStatus: "set-for-1",
     tasks: [
-      { id: 1, status: PromiseStatus.PENDING, result: null, isStale: true },
+      { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: true },
       { id: 2, status: PromiseStatus.PENDING, result: null, isStale: false },
     ],
     terminalOutput: ["> resolve1 = () => {}", "> 任务 #1 已标记为失效 (Stale)"],
@@ -179,7 +179,7 @@ export const PromiseStatusSteps = [
     actionTitle: "更新取消处理器",
     cancelVariableStatus: "set-for-2",
     tasks: [
-      { id: 1, status: PromiseStatus.PENDING, result: null, isStale: true },
+      { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: true },
       { id: 2, status: PromiseStatus.PENDING, result: null, isStale: false },
     ],
     terminalOutput: [
@@ -195,7 +195,7 @@ export const PromiseStatusSteps = [
     actionTitle: "发起网络请求 #2",
     cancelVariableStatus: "set-for-2",
     tasks: [
-      { id: 1, status: PromiseStatus.PENDING, result: null, isStale: true },
+      { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: true },
       { id: 2, status: PromiseStatus.PENDING, result: null, isStale: false },
     ],
     terminalOutput: ["> 正在请求订单 2 数据...", "> 监听响应中..."],
@@ -210,7 +210,7 @@ export const PromiseStatusSteps = [
     tasks: [
       {
         id: 1,
-        status: PromiseStatus.PENDING,
+        status: PromiseStatus.CANCELLED,
         result: "{订单1数据}",
         isStale: true,
       },

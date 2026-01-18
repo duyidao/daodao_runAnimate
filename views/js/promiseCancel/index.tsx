@@ -42,13 +42,13 @@ const VisualizerPanel: React.FC<any> = () => {
                     : "opacity-20 scale-95 grayscale"
                 }`}
               >
-                <div className="text-[10px] font-black text-orange-500 mb-1">
-                  FLAG (Ref)
+                <div className="text-[1rem] font-black text-orange-500 mb-1">
+                  Init (1)
                 </div>
                 <div className="text-sm font-mono font-bold tracking-tight">
-                  value:{" "}
+                  状态:{" "}
                   <span className="text-orange-400">
-                    {currentStep.id >= 3 ? "false" : "true"}
+                    {currentStep.tasks?.[0]?.status || "暂无状态"}
                   </span>
                 </div>
               </div>
@@ -59,13 +59,13 @@ const VisualizerPanel: React.FC<any> = () => {
                     : "opacity-20 scale-95 grayscale"
                 }`}
               >
-                <div className="text-[10px] font-black text-orange-500 mb-1">
-                  COUNT (Ref)
+                <div className="text-[1rem] font-black text-orange-500 mb-1">
+                  Init (2)
                 </div>
                 <div className="text-sm font-mono font-bold tracking-tight">
-                  value:{" "}
+                  状态:{" "}
                   <span className="text-orange-400">
-                    {currentStep.id >= 4 ? "1" : "0"}
+                    {currentStep.tasks?.[1]?.status || "暂无状态"}
                   </span>
                 </div>
               </div>

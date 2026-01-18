@@ -20,8 +20,8 @@ const CodeViewer: React.FC<{
   }, [activeLine]);
 
   return (
-    <div className="bg-[#1e1e1e] h-full flex flex-col font-mono text-sm overflow-hidden">
-      <div className="flex h-16 items-center px-4 py-3 bg-[#252526] border-b border-[#333]">
+    <div className="bg-[#1c1917] h-full flex flex-col font-mono text-sm overflow-hidden">
+      <div className="flex h-16 items-center px-4 py-3 bg-[#171310] border-b border-[#333]">
         <div className="flex gap-1.5 mr-5">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -31,7 +31,10 @@ const CodeViewer: React.FC<{
           {name}
         </span>
       </div>
-      <div ref={scrollRef} className="flex-1 overflow-auto p-4 leading-6">
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-auto p-4 leading-6 border-r border-[#333]"
+      >
         {lines.map((line, index) => {
           const lineNumber = index + 1;
           const isActive =
@@ -42,11 +45,11 @@ const CodeViewer: React.FC<{
             <div
               key={index}
               className={`flex items-center transition-colors duration-200 text-[0.8rem] ${
-                isActive ? "bg-[#37373d]" : "hover:bg-[#2a2a2d]"
+                isActive ? "bg-[#331f10]" : "hover:bg-[#2a2a2d]"
               }`}
             >
               <span
-                className={`w-8 text-right pr-4 select-none pt-[2px] ${
+                className={`min-w-8 w-8 text-right pr-4 select-none pt-[2px] ${
                   isActive ? "text-gray-200 font-bold" : "text-gray-600"
                 }`}
               >

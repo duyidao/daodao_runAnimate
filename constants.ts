@@ -21,7 +21,7 @@ export const CATEGORIES: Category[] = [
     scenarios: [
       {
         id: "promise-cancel",
-        path: "/promiseCancel",
+        path: "/js/promiseCancel",
         name: "Promise 竞态取消",
         description:
           "Tab 频繁切换时，容易造成新接口比旧接口早响应，导致页面数据是旧数据。灵活运用竞态取消思想，高效优雅解决该问题。",
@@ -31,7 +31,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: "async-once",
-        path: "/asyncOnce",
+        path: "/js/asyncOnce",
         name: "异步请求复用逻辑",
         description:
           "Tab 频繁切换时，容易造成新接口比旧接口早响应，导致页面数据是旧数据。灵活运用竞态取消思想，高效优雅解决该问题。",
@@ -41,7 +41,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: "object-loop",
-        path: "/objectLoop",
+        path: "/js/objectLoop",
         name: "对象循环引用判断",
         description:
           "判断对象是否存在循环引用，常用在对象深拷贝、循环引用检测等场景。",
@@ -58,7 +58,7 @@ export const CATEGORIES: Category[] = [
     scenarios: [
       {
         id: "vue-ref-effect",
-        path: "/effectRefLink",
+        path: "/vue/effectRefLink",
         name: "Ref 与 Effect 追踪",
         tag: ["dep", "sub", "双向链表", "节点复用"],
         description:

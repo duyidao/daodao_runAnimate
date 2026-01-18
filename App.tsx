@@ -8,14 +8,14 @@ import { debounce } from "lodash-es";
 
 const getFontSize = () => {
   document.documentElement.style.fontSize = `${Math.max(
-    12,
-    Math.min(window.innerWidth / 100, 20)
+    10,
+    Math.min(window.innerWidth / 100, 22),
   )}px`;
 };
 getFontSize();
 window.addEventListener(
   "resize",
-  debounce(() => getFontSize(), 100)
+  debounce(() => getFontSize(), 100),
 );
 
 export default function App() {
@@ -23,10 +23,10 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          <Route path="/objectLoop" element={<ObjectLoop />} />
-          <Route path="/effectRefLink" element={<EffectRefLink />} />
-          <Route path="/asyncOnce" element={<AsyncOnce />} />
-          <Route path="/promiseCancel" element={<PromiseCancel />} />
+          <Route path="/js/objectLoop" element={<ObjectLoop />} />
+          <Route path="/vue/effectRefLink" element={<EffectRefLink />} />
+          <Route path="/js/asyncOnce" element={<AsyncOnce />} />
+          <Route path="/js/promiseCancel" element={<PromiseCancel />} />
         </Route>
       </Routes>
     </Router>

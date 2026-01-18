@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { useLocation } from "react-router-dom";
 import {
   Play,
@@ -15,32 +21,26 @@ import CodeViewer from "./codeViewer";
 
 export default function AppLayout() {
   const location = useLocation();
-  const [route, setRoute] = useState({});
-  const [steps, setSteps] = useState([]);
-  useEffect(() => {
-    for (let i = 0; i < CATEGORIES.length; i++) {
-      const cat = CATEGORIES[i];
-      for (let j = 0; j < cat.scenarios.length; j++) {
-        const scenario = cat.scenarios[j];
-        if (scenario.path === location.pathname) {
-          setRoute(scenario);
-          setSteps(scenario.steps);
-          break;
-        }
-      }
-    }
+  // 路由信息
+  const route = useMemo(() => {
+    const type = location.pathname.split("/")[1];
+    const cat = CATEGORIES.find((cat) => cat.id === type);
+    return cat.scenarios.find((e) => e.path === location.pathname);
+  }, [location.pathname]);
+  // 步骤数组
+  const steps = useMemo(() => {
+    const type = location.pathname.split("/")[1];
+    const cat = CATEGORIES.find((cat) => cat.id === type);
+    return cat.scenarios.find((e) => e.path === location.pathname).steps;
   }, [location.pathname]);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1000);
-  const [currentStep, setCurrentStep] = useState({});
-  const [totalSteps, setTotalSteps] = useState(0);
-  useEffect(() => {
-    if (!steps.length) return;
-    setCurrentStep(steps[currentStepIndex]);
-    setTotalSteps(steps.length);
-  }, [steps, currentStepIndex]);
+  // 总步骤数
+  const totalSteps = useMemo(() => {
+    return steps.length || 0;
+  }, [steps]);
   const playTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -74,6 +74,11 @@ export default function AppLayout() {
     });
   }, [currentStepIndex, totalSteps]);
 
+  // 当前步骤对象
+  const currentStep = useMemo(() => {
+    return { ...steps[currentStepIndex] };
+  }, [currentStepIndex, totalSteps]);
+
   const handlePrev = () => {
     setIsPlaying(false);
     setCurrentStepIndex((prev) => Math.max(0, prev - 1));
@@ -96,7 +101,7 @@ export default function AppLayout() {
   };
 
   return (
-    <div className="h-screen bg-[#101010] text-gray-100 flex overflow-hidden font-sans selection:bg-orange-500/30">
+    <div className="h-screen bg-[#171412] text-gray-100 flex overflow-hidden font-sans selection:bg-orange-500/30">
       <NavigationOverlay
         isOpen={isNavOpen}
         onClose={() => setIsNavOpen(false)}
@@ -104,7 +109,7 @@ export default function AppLayout() {
       />
 
       {/* LEFT PANEL: CODE */}
-      <div className="w-1/2 flex flex-col border-r border-[#333]">
+      <div className="w-1/2 flex flex-col">
         <CodeViewer
           code={route.code || ""}
           name={route.name}
@@ -113,10 +118,7 @@ export default function AppLayout() {
       </div>
 
       {/* RIGHT PANEL: EXECUTION */}
-      <div
-        className="w-1/2 flex flex-col"
-        style={{ backgroundColor: "rgba(39, 26, 17, 0.3)" }}
-      >
+      <div className="w-1/2 flex flex-col">
         {/* Header Area */}
         <div className="h-16 px-6 border-b border-[#333] flex items-center justify-between text-[12px]">
           <h1
@@ -152,7 +154,7 @@ export default function AppLayout() {
           <button
             onClick={handlePrev}
             disabled={currentStepIndex === 0}
-            className="p-2.5 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+            className="p-2 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
             title="上一步"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -176,7 +178,7 @@ export default function AppLayout() {
           <button
             onClick={handleNext}
             disabled={currentStepIndex === steps?.length - 1}
-            className="p-2.5 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+            className="p-2 rounded-full text-gray-400 hover:bg-orange-500/50 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
             title="下一步"
           >
             <ChevronRight className="w-6 h-6" />
