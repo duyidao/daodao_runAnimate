@@ -12,7 +12,11 @@ const VisualizerPanel: React.FC<any> = () => {
   return (
     <div className="flex-1 flex flex-col gap-6 animate-in fade-in slide-in-from-right-4 duration-700">
       {/* Action Banner */}
-      <NowHandle description={currentStep.description} />
+      <NowHandle
+        description={currentStep.description}
+        title={currentStep.title}
+        operation={currentStep.operation}
+      />
 
       {/* Main Diagram Area */}
       <div>

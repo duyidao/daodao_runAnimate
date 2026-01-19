@@ -60,6 +60,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 43,
     description: "1. User_A 发起 loadOnce() 请求。",
+    operation: "RUN",
+    title: "发起 A 请求",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 43,
@@ -73,6 +75,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 13,
     description: "2. 计算参数特征 Key，此处无参数，Key 为 '[]'。",
+    operation: "EVICT",
+    title: "计算 Key",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 13,
@@ -86,6 +90,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 15,
     description: "3. 检查 Map，发现尚未有该 Key 的请求，进入创建逻辑。",
+    operation: "EVICT",
+    title: "检查 Map",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 15,
@@ -98,6 +104,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   },
   {
     highlightLines: 16,
+    operation: "INIT",
+    title: "初始化 Map 节点",
     description:
       "4. 初始化 Map 节点，resolve/reject 为空数组，isPending 为 false。",
     state: {
@@ -118,6 +126,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 22,
     description: "5. 从 Map 中获取当前 Key 的状态引用对象 state。",
+    operation: "GET",
+    title: "获取 Map 节点",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 22,
@@ -136,6 +146,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 24,
     description: "6. 将 User_A 的 resolve 回调存入 resolve 数组。",
+    operation: "SET",
+    title: "添加 User_A resolve 回调",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 24,
@@ -154,6 +166,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 27,
     description: "7. 判断 isPending，当前为 false，准备发起请求。",
+    operation: "RUN",
+    title: "判断 isPending",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 27,
@@ -172,6 +186,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 29,
     description: "8. 设置 isPending 为 true，锁定后续相同请求。",
+    operation: "SET",
+    title: "设置 isPending 为 true",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 29,
@@ -190,6 +206,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 30,
     description: "9. 真正发起网络请求 (cb(...args))。",
+    operation: "RUN",
+    title: "发起 A 请求",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 30,
@@ -209,6 +227,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 43,
     description: "10. User_B 也需要发起相同的请求。",
+    operation: "RUN",
+    title: "发起 B 请求",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 43,
@@ -231,6 +251,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 24,
     description: "11. User_B 的回调也存入同一个 Map 节点的队列中。",
+    operation: "SET",
+    title: "添加 User_B resolve 回调",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 24,
@@ -252,6 +274,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   },
   {
     highlightLines: 27,
+    operation: "RUN",
+    title: "判断 isPending",
     description:
       "12. User_B 发现 isPending 为 true，直接 return 挂起，不发请求。",
     state: {
@@ -276,6 +300,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 43,
     description: "13. User_C 也发起了 loadOnce()。",
+    operation: "RUN",
+    title: "发起 C 请求",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 43,
@@ -299,6 +325,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 24,
     description: "14. User_C 的回调被推入队列。现在队列中有 3 个等待者。",
+    operation: "SET",
+    title: "添加 User_C resolve 回调",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 24,
@@ -322,6 +350,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 2,
     description: "15. 网络响应成功！获取到 GitHub 数据。",
+    operation: "RUN",
+    title: "请求成功",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 2,
@@ -345,6 +375,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 32,
     description: "16. 遍历 resolve 数组，一次性通知所有 User 回调成功。",
+    operation: "RUN",
+    title: "通知所有 User 回调成功",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 32,
@@ -369,6 +401,8 @@ export const AsyncOnceSteps: AnimationStep[] = [
   {
     highlightLines: 38,
     description: "17. 请求彻底结束，清理 Map，设为 null，释放内存资源。",
+    operation: "FINISH",
+    title: "清理 Map",
     state: {
       ...INITIAL_STATE,
       highlightedLine: 38,

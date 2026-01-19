@@ -1,7 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import ObjectLoop from "@/views/js/objectLoop/index";
 import EffectRefLink from "@/views/vue/effectRefLink/index";
 import PromiseCancel from "@/views/js/promiseCancel/index";
+import LruCache from "@/views/js/lru/index"; // LRU 缓存算法
 import AsyncOnce from "@/views/js/asyncOnce/index";
 import AppLayout from "@/layout/index";
 import { debounce } from "lodash-es";
@@ -23,10 +29,12 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AppLayout />}>
+          <Route path="/" element={<Navigate to="/js/objectLoop" replace />} />
           <Route path="/js/objectLoop" element={<ObjectLoop />} />
           <Route path="/vue/effectRefLink" element={<EffectRefLink />} />
           <Route path="/js/asyncOnce" element={<AsyncOnce />} />
           <Route path="/js/promiseCancel" element={<PromiseCancel />} />
+          <Route path="/js/lru" element={<LruCache />} />
         </Route>
       </Routes>
     </Router>

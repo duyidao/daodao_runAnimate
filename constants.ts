@@ -12,6 +12,7 @@ import {
   EffectRefLinkSteps,
 } from "./views/vue/effectRefLink/constants";
 import { AsyncOnceCode, AsyncOnceSteps } from "@/views/js/asyncOnce/constants";
+import { LruCode, LruCodeSteps } from "@/views/js/lru/constants";
 
 export const CATEGORIES: Category[] = [
   {
@@ -48,6 +49,16 @@ export const CATEGORIES: Category[] = [
         tag: ["循环引用", "集合判断"],
         code: ObjectLoopCode,
         steps: ObjectLoopSteps,
+      },
+      {
+        id: "lru-cache",
+        path: "/js/lru",
+        name: "LRU 缓存算法",
+        description:
+          "LRU 缓存算法，用于缓存最近使用的数据，当缓存满时，淘汰最近最少使用的数据。",
+        tag: ["缓存", "最近最少使用"],
+        code: LruCode,
+        steps: LruCodeSteps,
       },
     ],
   },

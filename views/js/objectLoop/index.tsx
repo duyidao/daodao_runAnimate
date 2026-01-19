@@ -89,8 +89,8 @@ const GraphVisualizer: React.FC<{
                           isRoot
                             ? "border-orange-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]"
                             : inSetRoot
-                            ? "border-orange-900/50 opacity-50"
-                            : "border-gray-600"
+                              ? "border-orange-900/50 opacity-50"
+                              : "border-gray-600"
                         }
                     `}
           >
@@ -152,8 +152,8 @@ const GraphVisualizer: React.FC<{
                                isA
                                  ? "border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.5)]"
                                  : inSetA
-                                 ? "border-purple-900/50"
-                                 : "border-gray-600"
+                                   ? "border-purple-900/50"
+                                   : "border-gray-600"
                              }
                         `}
             >
@@ -181,8 +181,8 @@ const GraphVisualizer: React.FC<{
                                isC
                                  ? "border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.5)]"
                                  : inSetC
-                                 ? "border-purple-900/50"
-                                 : "border-gray-600"
+                                   ? "border-purple-900/50"
+                                   : "border-gray-600"
                              }
                         `}
             >
@@ -211,7 +211,11 @@ export default function ObjectLoop() {
   return (
     <div className="flex flex-col h-full gap-6 overflow-hidden">
       {/* 1. Step Description */}
-      <NowHandle description={currentStep.description} />
+      <NowHandle
+        description={currentStep.description}
+        title={currentStep.title}
+        operation={currentStep.operation}
+      />
 
       {/* 2. Visualizers Grid */}
       <div className="grid grid-cols-1 gap-4 shrink-0">

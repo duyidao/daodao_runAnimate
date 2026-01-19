@@ -25,7 +25,11 @@ const Visualizer: React.FC<VisualizerProps> = () => {
   return (
     <div className="flex flex-col gap-6 relative">
       {/* Action Banner */}
-      <NowHandle description={currentStep.description} />
+      <NowHandle
+        description={currentStep.description}
+        title={currentStep.title}
+        operation={currentStep.operation}
+      />
 
       <div
         className="absolute inset-0 opacity-5 pointer-events-none"

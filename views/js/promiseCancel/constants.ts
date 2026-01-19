@@ -1,4 +1,4 @@
-import { PromiseStatus } from "@/types/promiseCancel";
+import { PromiseStatus, ExecutionStep } from "@/types/promiseCancel";
 
 export const PromiseCancelCode = `function createCancelTask(task) {
   let cancel = () => {};
@@ -23,12 +23,13 @@ const init = createCancelTask(async (id) => {
 init(1);
 init(2);`;
 
-export const PromiseStatusSteps = [
+export const PromiseStatusSteps: ExecutionStep[] = [
   {
     id: 0,
     highlightLines: [],
+    operation: "INIT",
+    title: "程序就绪",
     description: "初始状态。全局执行上下文已建立，等待代码执行。",
-    actionTitle: "程序就绪",
     cancelVariableStatus: "initial",
     tasks: [],
     terminalOutput: ["系统已准备就绪..."],
@@ -38,7 +39,8 @@ export const PromiseStatusSteps = [
     highlightLines: [1, 14],
     description:
       "定义高阶函数 createCancelTask。它利用闭包来维护一个取消逻辑的引用。",
-    actionTitle: "定义工厂函数",
+    title: "定义工厂函数",
+    operation: "CREATE",
     cancelVariableStatus: "initial",
     tasks: [],
     terminalOutput: ["> 定义 createCancelTask"],
@@ -48,7 +50,8 @@ export const PromiseStatusSteps = [
     highlightLines: [16, 17, 18, 19],
     description:
       "执行 createCancelTask。返回一个新的匿名函数，并将其赋值给 init。此时闭包内的 cancel 变量被初始化为一个空函数。",
-    actionTitle: "初始化 init 实例",
+    title: "初始化 init 实例",
+    operation: "INIT",
     cancelVariableStatus: "initial",
     tasks: [],
     terminalOutput: [
@@ -61,7 +64,8 @@ export const PromiseStatusSteps = [
     highlightLines: [21],
     description:
       "调用 init(1)。程序进入 init 函数体。这是第一个异步任务的起点。",
-    actionTitle: "调用 init(1)",
+    title: "调用 init(1)",
+    operation: "INIT",
     cancelVariableStatus: "initial",
     tasks: [],
     terminalOutput: ["> 开始执行 init(1)"],
@@ -71,8 +75,9 @@ export const PromiseStatusSteps = [
     highlightLines: [4],
     description:
       "进入 new Promise。JavaScript 引擎立即执行构造函数内的 Executor 函数。此时 resolve1 和 reject1 被注入。",
-    actionTitle: "创建 Promise #1",
+    title: "创建 Promise #1",
     cancelVariableStatus: "initial",
+    operation: "CREATE",
     tasks: [
       { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
     ],
@@ -83,7 +88,8 @@ export const PromiseStatusSteps = [
     highlightLines: [5],
     description:
       "执行 cancel()。此时闭包中的 cancel 还是初始的空函数，因此不会发生任何操作。",
-    actionTitle: "执行 cancel (空操作)",
+    title: "执行 cancel (空操作)",
+    operation: "RUN",
     cancelVariableStatus: "initial",
     tasks: [
       { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
@@ -95,7 +101,8 @@ export const PromiseStatusSteps = [
     highlightLines: [6, 7, 8],
     description:
       "重写闭包变量 cancel。现在的 cancel 持有了对 resolve1 和 reject1 的引用。如果它再次被执行，任务 #1 将会失效。",
-    actionTitle: "更新取消处理器",
+    title: "更新取消处理器",
+    operation: "RUN",
     cancelVariableStatus: "set-for-1",
     tasks: [
       { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
@@ -110,7 +117,8 @@ export const PromiseStatusSteps = [
     highlightLines: [9, 10],
     description:
       "开始执行真正的异步任务 task(1)。网络请求 fetch(/order/1) 发出，Promise 等待 resolve1 的调用。",
-    actionTitle: "发起网络请求 #1",
+    title: "发起网络请求 #1",
+    operation: "RUN",
     cancelVariableStatus: "set-for-1",
     tasks: [
       { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
@@ -122,7 +130,8 @@ export const PromiseStatusSteps = [
     highlightLines: [22],
     description:
       "在任务 #1 还在 Pending 时，代码执行到了 init(2)。开始第二个任务周期。",
-    actionTitle: "并发调用 init(2)",
+    title: "并发调用 init(2)",
+    operation: "INIT",
     cancelVariableStatus: "set-for-1",
     tasks: [
       { id: 1, status: PromiseStatus.PENDING, result: null, isStale: false },
@@ -134,7 +143,8 @@ export const PromiseStatusSteps = [
     highlightLines: [4],
     description:
       "init(2) 创建了 Promise #2。现在内存中有两个并行的 Promise 任务。",
-    actionTitle: "创建 Promise #2",
+    title: "创建 Promise #2",
+    operation: "CREATE",
     cancelVariableStatus: "set-for-1",
     tasks: [
       { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: false },
@@ -147,7 +157,8 @@ export const PromiseStatusSteps = [
     highlightLines: [5],
     description:
       "关键时刻：init(2) 执行了 cancel()。由于闭包共享，它调用的是我们在第 6 步中设置的函数！",
-    actionTitle: "触发任务 #1 取消",
+    title: "触发任务 #1 取消",
+    operation: "RUN",
     cancelVariableStatus: "set-for-1",
     tasks: [
       { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: false },
@@ -163,7 +174,8 @@ export const PromiseStatusSteps = [
     highlightLines: [7],
     description:
       "在 cancel() 内部，任务 #1 的 resolve1 和 reject1 被重新赋值为空函数。任务 #1 逻辑上已被'丢弃'。",
-    actionTitle: "重置任务 #1 指针",
+    title: "重置任务 #1 指针",
+    operation: "RUN",
     cancelVariableStatus: "set-for-1",
     tasks: [
       { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: true },
@@ -176,7 +188,8 @@ export const PromiseStatusSteps = [
     highlightLines: [6, 7, 8],
     description:
       "init(2) 继续执行，将闭包变量 cancel 更新为指向它自己的 resolve2 和 reject2。",
-    actionTitle: "更新取消处理器",
+    title: "更新取消处理器",
+    operation: "RUN",
     cancelVariableStatus: "set-for-2",
     tasks: [
       { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: true },
@@ -192,7 +205,8 @@ export const PromiseStatusSteps = [
     highlightLines: [9, 10],
     description:
       "发起网络请求 #2。现在两个请求都在后台运行，但只有任务 #2 能最终触发 UI 更新。",
-    actionTitle: "发起网络请求 #2",
+    title: "发起网络请求 #2",
+    operation: "RUN",
     cancelVariableStatus: "set-for-2",
     tasks: [
       { id: 1, status: PromiseStatus.CANCELLED, result: null, isStale: true },
@@ -205,7 +219,8 @@ export const PromiseStatusSteps = [
     highlightLines: [10],
     description:
       "任务 #1 请求先返回。触发了它的 .then()，并尝试调用 resolve1(res)。",
-    actionTitle: "响应 #1 返回",
+    title: "响应 #1 返回",
+    operation: "RUN",
     cancelVariableStatus: "set-for-2",
     tasks: [
       {
@@ -223,7 +238,8 @@ export const PromiseStatusSteps = [
     highlightLines: [10],
     description:
       "由于 resolve1 已被置空（空函数），执行 resolve1(res) 不会触发 Promise #1 的状态变更。它永远保持 Pending。",
-    actionTitle: "忽略响应 #1",
+    title: "忽略响应 #1",
+    operation: "RUN",
     cancelVariableStatus: "set-for-2",
     tasks: [
       {
@@ -244,7 +260,8 @@ export const PromiseStatusSteps = [
     highlightLines: [10],
     description:
       "任务 #2 请求随后返回。调用 resolve2(res)。由于它没被后续任务重置，resolve2 是原始有效的函数。",
-    actionTitle: "响应 #2 返回",
+    title: "响应 #2 返回",
+    operation: "RUN",
     cancelVariableStatus: "set-for-2",
     tasks: [
       {

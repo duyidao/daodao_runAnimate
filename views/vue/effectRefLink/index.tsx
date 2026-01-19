@@ -13,7 +13,11 @@ export default function EffectRefLink() {
   return (
     <div className="flex flex-col h-full gap-6">
       {/* Dynamic Operation Banner */}
-      <NowHandle description={currentStep.description} />
+      <NowHandle
+        description={currentStep.description}
+        title={currentStep.title}
+        operation={currentStep.operation}
+      />
 
       {/* Visualization Content Area */}
       <div className="flex-1 flex flex-col min-h-0 mt-2">

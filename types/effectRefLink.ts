@@ -1,9 +1,9 @@
-import { Step } from './step'
+import { Step } from "./step";
 
 export enum NodeType {
-  REF = 'REF',
-  EFFECT = 'EFFECT',
-  LINK = 'LINK'
+  REF = "REF",
+  EFFECT = "EFFECT",
+  LINK = "LINK",
 }
 
 export interface Link {
@@ -28,7 +28,7 @@ export interface EffectNode {
   id: string;
   name: string;
   depsHeadId?: string; // Head of dependencies link list
-  depsTailId?: string | 'undefined'; // Tail of dependencies link list
+  depsTailId?: string | "undefined"; // Tail of dependencies link list
   active?: boolean;
 }
 
@@ -39,10 +39,8 @@ export interface SimulationState {
   activeSubId?: string;
   highlightedLine: number;
   description: string;
-  operationType: string;
 }
 
 export interface AnimationStep extends Step {
-  operationType: string;
   state: SimulationState;
 }

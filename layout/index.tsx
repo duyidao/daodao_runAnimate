@@ -25,13 +25,15 @@ export default function AppLayout() {
   const route = useMemo(() => {
     const type = location.pathname.split("/")[1];
     const cat = CATEGORIES.find((cat) => cat.id === type);
-    return cat.scenarios.find((e) => e.path === location.pathname);
+    return cat?.scenarios?.find((e) => e.path === location.pathname) || {};
   }, [location.pathname]);
   // 步骤数组
   const steps = useMemo(() => {
     const type = location.pathname.split("/")[1];
     const cat = CATEGORIES.find((cat) => cat.id === type);
-    return cat.scenarios.find((e) => e.path === location.pathname).steps;
+    return (
+      cat?.scenarios?.find((e) => e.path === location.pathname)?.steps || []
+    );
   }, [location.pathname]);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
